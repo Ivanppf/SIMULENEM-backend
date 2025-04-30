@@ -2,6 +2,8 @@ package com.ifpbpj2.SIMULENEM_backend.model.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
@@ -16,6 +18,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -38,7 +41,10 @@ public class Question implements Serializable{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "illustration_id", referencedColumnName = "id")
     private Illustration illustration;
-    
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Alternative> alternatives;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;
@@ -53,12 +59,16 @@ public class Question implements Serializable{
     private LocalDateTime lastUsedDate;
 
     public Question() {
+        this.alternatives = new HashSet<>();
     }
 
-    public Question(QuestionType questionType, String statement, Difficulty difficulty, int estimatedTimeInMin,
+    public Question(QuestionType questionType, String statement, Illustration illustration, 
+            Set<Alternative> alternatives, Difficulty difficulty, int estimatedTimeInMin,
             String expectedAnswer) {
         this.questionType = questionType;
         this.statement = statement;
+        this.illustration = illustration;
+        this.alternatives = alternatives;
         this.difficulty = difficulty;
         this.estimatedTimeInMin = estimatedTimeInMin;
         this.expectedAnswer = expectedAnswer;
@@ -82,6 +92,22 @@ public class Question implements Serializable{
 
     public void setStatement(String statement) {
         this.statement = statement;
+    }
+
+    public Set<Alternative> getAlternatives() {
+        return alternatives;
+    }
+
+    public void setAlternatives(Set<Alternative> alternatives) {
+        this.alternatives = alternatives;
+    }
+
+    public Illustration getIllustration() {
+        return illustration;
+    }
+
+    public void setIllustration(Illustration illustration) {
+        this.illustration = illustration;
     }
 
     public Difficulty getDifficulty() {
