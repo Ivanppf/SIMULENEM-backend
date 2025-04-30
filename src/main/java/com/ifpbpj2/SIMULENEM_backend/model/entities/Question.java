@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +15,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,6 +34,10 @@ public class Question implements Serializable{
     
     @Column(nullable = false)
     private String statement;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "illustration_id", referencedColumnName = "id")
+    private Illustration illustration;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
