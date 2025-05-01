@@ -24,20 +24,20 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_QUESTION")
-public class Question implements Serializable{
+public class Question implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private QuestionType questionType;
-    
+
     @Column(nullable = false)
-    private String statement;
-    
+    private String title;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "illustration_id", referencedColumnName = "id")
     private Illustration illustration;
@@ -48,13 +48,13 @@ public class Question implements Serializable{
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;
-    
+
     @Column(nullable = false)
-    private int estimatedTimeInMin;
-    
+    private Integer estimatedTimeInMin;
+
     @Column(nullable = false)
     private String expectedAnswer;
-    
+
     @Column(nullable = true)
     private LocalDateTime lastUsedDate;
 
@@ -62,16 +62,26 @@ public class Question implements Serializable{
         this.alternatives = new HashSet<>();
     }
 
-    public Question(QuestionType questionType, String statement, Illustration illustration, 
-            Set<Alternative> alternatives, Difficulty difficulty, int estimatedTimeInMin,
+    public Question(QuestionType questionType, String title, Illustration illustration,
+            Set<Alternative> alternatives, Difficulty difficulty, Integer estimatedTimeInMin,
             String expectedAnswer) {
         this.questionType = questionType;
-        this.statement = statement;
+        this.title = title;
         this.illustration = illustration;
         this.alternatives = alternatives;
         this.difficulty = difficulty;
         this.estimatedTimeInMin = estimatedTimeInMin;
         this.expectedAnswer = expectedAnswer;
+    }
+
+    public Question(UUID id, QuestionType questionType, String title, Difficulty difficulty, Integer estimatedTimeInMin,
+            LocalDateTime lastUsedDate) {
+        this.id = id;
+        this.questionType = questionType;
+        this.title = title;
+        this.difficulty = difficulty;
+        this.estimatedTimeInMin = estimatedTimeInMin;
+        this.lastUsedDate = lastUsedDate;
     }
 
     public UUID getId() {
@@ -86,12 +96,12 @@ public class Question implements Serializable{
         this.questionType = questionType;
     }
 
-    public String getStatement() {
-        return statement;
+    public String getTitle() {
+        return title;
     }
 
-    public void setStatement(String statement) {
-        this.statement = statement;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Set<Alternative> getAlternatives() {
@@ -118,11 +128,11 @@ public class Question implements Serializable{
         this.difficulty = difficulty;
     }
 
-    public int getEstimatedTimeInMin() {
+    public Integer getEstimatedTimeInMin() {
         return estimatedTimeInMin;
     }
 
-    public void setEstimatedTimeInMin(int estimatedTimeInMin) {
+    public void setEstimatedTimeInMin(Integer estimatedTimeInMin) {
         this.estimatedTimeInMin = estimatedTimeInMin;
     }
 
@@ -169,11 +179,15 @@ public class Question implements Serializable{
 
     @Override
     public String toString() {
-        return "Question [id=" + id + ", questionType=" + questionType + ", statement=" + statement + ", difficulty="
-                + difficulty + ", estimatedTimeInMin=" + estimatedTimeInMin + ", expectedAnswer=" + expectedAnswer
+        return "Question [id=" + id + ", questionType=" + questionType + ", title=" + title + ", difficulty="
+                + difficulty + ", estimatedTimeInMin=" + estimatedTimeInMin + ", expectedAnswer=" + expectedAn
+
+
+
+public static long getSerialversionuid() {
+    return serialVersionUID;
+}swer
                 + ", lastUsedDate=" + lastUsedDate + "]";
     }
-
-    
 
 }
