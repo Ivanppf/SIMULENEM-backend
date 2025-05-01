@@ -56,10 +56,17 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity save(@Valid @RequestBody QuestionRequestDTO obj) {
-        Question question = new Question();
+        Question question = new Question(obj);
+        question = questionService.save(question);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new QuestionResponseDTO(question));
     }
 
-    // @PutMapping
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") UUID id, @Valid @RequestBody QuestionRequestDTO obj) {
+        Question question = new Question(obj);
+        question = questionService.update(id, question);
+        return ResponseEntity.ok().body(new QuestionResponseDTO(question));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable("id") UUID id) {

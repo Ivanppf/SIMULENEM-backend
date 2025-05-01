@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -82,6 +83,15 @@ public class Question implements Serializable {
         this.difficulty = difficulty;
         this.estimatedTimeInMin = estimatedTimeInMin;
         this.lastUsedDate = lastUsedDate;
+    }
+
+    public Question(QuestionRequestDTO obj) {
+        this.questionType = obj.questionType();
+        this.title = obj.title();
+        this.illustration = obj.illustration();
+        this.alternatives = obj.alternatives();
+        this.difficulty = obj.difficulty();
+        this.expectedAnswer = obj.expectedAnswer();
     }
 
     public UUID getId() {
@@ -180,13 +190,7 @@ public class Question implements Serializable {
     @Override
     public String toString() {
         return "Question [id=" + id + ", questionType=" + questionType + ", title=" + title + ", difficulty="
-                + difficulty + ", estimatedTimeInMin=" + estimatedTimeInMin + ", expectedAnswer=" + expectedAn
-
-
-
-public static long getSerialversionuid() {
-    return serialVersionUID;
-}swer
+                + difficulty + ", estimatedTimeInMin=" + estimatedTimeInMin + ", expectedAnswer=" + expectedAnswer
                 + ", lastUsedDate=" + lastUsedDate + "]";
     }
 
