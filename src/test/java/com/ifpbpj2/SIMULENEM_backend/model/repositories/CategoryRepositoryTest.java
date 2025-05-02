@@ -1,8 +1,9 @@
 package com.ifpbpj2.SIMULENEM_backend.model.repositories;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,25 +23,39 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Alternative;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Illustration;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.Origin;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-class QuestionRepositoryTest {
+class CategoryRepositoryTest {
 
     @Autowired
-    QuestionRepository questionRepository;
+    CategoryRepository categoryRepository;
 
     @Autowired
     TestEntityManager entityManager;
 
     List<Question> questions = new ArrayList<>();
-    
+    List<Category> categories = new ArrayList<>();
+
     @BeforeEach
     void setUp(){
+       initializeQuestions();
+       initializeCategories();
+    }
+    @AfterEach
+    void tearDown(){
+        entityManager.clear();
+        questions.clear();
+        categories.clear();
+    }
+
+    void initializeQuestions(){
         Set<Alternative> alternatives01 = new HashSet<>();
         Alternative alternative01a = new Alternative('a', "Paris", new Illustration( "Correct answer", "image2.test"));
         Alternative alternative01b = new Alternative('b', "London", new Illustration("Incorrect answer", "image3.test"));
@@ -62,7 +77,7 @@ class QuestionRepositoryTest {
             QuestionType.ABERTA,
             "What is the capital of France?",
             new Illustration("A map of Paris", "image1.test"),
-            alternatives01, Difficulty.MEDIO,"a"
+            alternatives01, Difficulty.FACIL,"a"
         );
 
         Question question2 = new Question(
@@ -78,55 +93,60 @@ class QuestionRepositoryTest {
             new Illustration("Flat Earth illustration", "image9.test"),
             alternatives03, Difficulty.FACIL,"b"
         );
-
         questions.add(entityManager.persist(question1));
         questions.add(entityManager.persist(question2));
         questions.add(entityManager.persist(question3));
-        
     }
-
-    @AfterEach
-    void tearDown(){
-        entityManager.clear();
-        questions.clear();
+    void initializeCategories(){
+        Category category1 = new Category("Geografia", Origin.DISCIPLINA);
+        Category category2 = new Category("Matematica", Origin.DISCIPLINA);
+        List<Question> qList = new ArrayList<>();
+        qList.add(questions.get(0));
+        qList.add(questions.get(2));
+        category1.setQuestions(qList);
+        categories.add(entityManager.persist(category1));
+        categories.add(entityManager.persist(category2));
     }
-
+    
     @Test
-    void givenValidQuestion_whenSave_thenPersist(){
-        Set<Alternative> alternatives = new HashSet<>();
-        var alternative1 = new Alternative('a', "Mercury", new Illustration("Incorrect answer", "image12.test"));
-        var alternative2 = new Alternative('b', "Venus", new Illustration("Incorrect answer", "image13.test"));
-        var alternative3 = new Alternative('c', "Mars", new Illustration("Correct answer", "image14.test"));
-        alternatives.addAll(Set.of(alternative1, alternative2, alternative3));
-        Question question = new Question(QuestionType.FECHADA,"Which planet is known as the Red Planet?",
-            new Illustration("An illustration of Mars", "image15.test"),
-            alternatives, Difficulty.MEDIO, "c"
-        );
-        Question questionSaved = questionRepository.save(question);
-        assertNotNull(questionSaved.getId());
+    void givenValidCategory_whenSave_thenPersist(){
+        Category category = new Category("Matematica", Origin.DISCIPLINA);
+
+        var categorySaved = categoryRepository.save(category);
+
+        UUID id = (UUID) entityManager.getId(category);
+        assertEquals(id, categorySaved.getId());
     }
 
     @Test
     void givenIdExists_whenFindById_thenReturnEntity(){
-        Question questionExistent = questions.get(0);
-        Optional<Question> question = questionRepository.findById(questionExistent.getId());
-        assertTrue(question.isPresent());
-        assertEquals(questionExistent, question.get());
+        UUID id = categories.get(0).getId();
+        Optional<Category> category = categoryRepository.findById(id);
+        assertTrue(category.isPresent());
+        assertEquals(categories.get(0), category.get());
     }
-    
+
     @Test
     void givenNonExistentId_whenFindById_thenReturnsEmptyOptional(){
         UUID id = UUID.fromString("00000000-0000-0000-0000-000000000000");
-        Optional<Question> question = questionRepository.findById(id);
-        assertFalse(question.isPresent());
+        Optional<Category> category = categoryRepository.findById(id);
+        assertFalse(category.isPresent());
     }
 
     @Test
     void givenExistingEntity_whenDelete_thenEntityIsRemoved(){
-        Question questionExistent = questions.get(0);
-        questionRepository.delete(questionExistent);
-        Question question = entityManager.find(Question.class, questionExistent.getId());
-        assertNull(question);
+        Category categoryExistent = categories.get(0);
+        categoryRepository.delete(categoryExistent);
+        Category category = entityManager.find(Category.class, categoryExistent.getId());
+        assertNull(category);
     }
 
+    @Test
+    void givenExistingEntity_whenSave_thenEntityIsUpdate(){
+        Category category = entityManager.find(Category.class, categories.get(0).getId());
+        category.setName("Português");
+        Category update = categoryRepository.save(category);
+        assertEquals(category.getName(), update.getName());
+        assertEquals(categories.size(),categoryRepository.count());
+    }
 }
