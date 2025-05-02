@@ -92,6 +92,10 @@ public class Question implements Serializable {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public QuestionType getQuestionType() {
         return questionType;
     }

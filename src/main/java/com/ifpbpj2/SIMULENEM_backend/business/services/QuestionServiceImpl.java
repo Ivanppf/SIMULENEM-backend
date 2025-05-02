@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.QuestionRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
@@ -45,6 +47,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question update(UUID uuid, Question question) {
         existsById(uuid);
+        question.setId(uuid);
         return questionRepository.save(question);
     }
 

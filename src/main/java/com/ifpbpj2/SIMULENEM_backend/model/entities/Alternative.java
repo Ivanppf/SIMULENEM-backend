@@ -15,22 +15,22 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_ALTERNATIVE")
-public class Alternative implements Serializable{
+public class Alternative implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
     private char options;
-    
+
     private String text;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "illustration_id", referencedColumnName = "id")
     private Illustration illustration;
-    
+
     public Alternative() {
     }
 
@@ -43,21 +43,27 @@ public class Alternative implements Serializable{
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
+
     public char getOptions() {
         return options;
     }
+
     public void setOptions(char options) {
         this.options = options;
     }
+
     public String getText() {
         return text;
     }
+
     public void setText(String text) {
         this.text = text;
     }
+
     public Illustration getIllustration() {
         return illustration;
     }
+
     public void setIllustration(Illustration illustration) {
         this.illustration = illustration;
     }
@@ -71,6 +77,7 @@ public class Alternative implements Serializable{
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + options;
         return result;
     }
 
@@ -88,6 +95,8 @@ public class Alternative implements Serializable{
                 return false;
         } else if (!id.equals(other.id))
             return false;
+        if (options != other.options)
+            return false;
         return true;
     }
 
@@ -97,6 +106,4 @@ public class Alternative implements Serializable{
                 + "]";
     }
 
-    
-    
 }
