@@ -17,12 +17,11 @@ public record QuestionResponseDTO(
         Illustration illustration,
         Set<Alternative> alternatives,
         Difficulty difficulty,
-        Integer estimatedTimeInMin,
         String expectedAnswer,
         LocalDateTime lastUsedDate) {
     public QuestionResponseDTO(Question question) {
         this(question.getId(), question.getQuestionType(), question.getTitle(), question.getIllustration(),
-                question.getAlternatives(), question.getDifficulty(), question.getEstimatedTimeInMin(),
+                question.getAlternatives(), question.getDifficulty(),
                 question.getExpectedAnswer(), question.getLastUsedDate());
     }
 }

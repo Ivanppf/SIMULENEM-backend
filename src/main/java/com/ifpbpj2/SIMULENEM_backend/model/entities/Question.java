@@ -51,12 +51,8 @@ public class Question implements Serializable {
     private Difficulty difficulty;
 
     @Column(nullable = false)
-    private Integer estimatedTimeInMin;
-
-    @Column(nullable = false)
     private String expectedAnswer;
 
-    @Column(nullable = true)
     private LocalDateTime lastUsedDate;
 
     public Question() {
@@ -64,24 +60,22 @@ public class Question implements Serializable {
     }
 
     public Question(QuestionType questionType, String title, Illustration illustration,
-            Set<Alternative> alternatives, Difficulty difficulty, Integer estimatedTimeInMin,
+            Set<Alternative> alternatives, Difficulty difficulty, 
             String expectedAnswer) {
         this.questionType = questionType;
         this.title = title;
         this.illustration = illustration;
         this.alternatives = alternatives;
         this.difficulty = difficulty;
-        this.estimatedTimeInMin = estimatedTimeInMin;
         this.expectedAnswer = expectedAnswer;
     }
 
-    public Question(UUID id, QuestionType questionType, String title, Difficulty difficulty, Integer estimatedTimeInMin,
+    public Question(UUID id, QuestionType questionType, String title, Difficulty difficulty,
             LocalDateTime lastUsedDate) {
         this.id = id;
         this.questionType = questionType;
         this.title = title;
         this.difficulty = difficulty;
-        this.estimatedTimeInMin = estimatedTimeInMin;
         this.lastUsedDate = lastUsedDate;
     }
 
@@ -138,14 +132,6 @@ public class Question implements Serializable {
         this.difficulty = difficulty;
     }
 
-    public Integer getEstimatedTimeInMin() {
-        return estimatedTimeInMin;
-    }
-
-    public void setEstimatedTimeInMin(Integer estimatedTimeInMin) {
-        this.estimatedTimeInMin = estimatedTimeInMin;
-    }
-
     public String getExpectedAnswer() {
         return expectedAnswer;
     }
@@ -190,7 +176,7 @@ public class Question implements Serializable {
     @Override
     public String toString() {
         return "Question [id=" + id + ", questionType=" + questionType + ", title=" + title + ", difficulty="
-                + difficulty + ", estimatedTimeInMin=" + estimatedTimeInMin + ", expectedAnswer=" + expectedAnswer
+                + difficulty + " , expectedAnswer=" + expectedAnswer
                 + ", lastUsedDate=" + lastUsedDate + "]";
     }
 

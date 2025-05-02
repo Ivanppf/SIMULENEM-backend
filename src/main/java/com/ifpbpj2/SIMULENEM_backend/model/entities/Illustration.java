@@ -19,8 +19,6 @@ public class Illustration implements Serializable{
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
-
     private String description;
 
     @Column(nullable = false)
@@ -29,8 +27,7 @@ public class Illustration implements Serializable{
     
     public Illustration() {
     }
-    public Illustration(String name, String description, String url) {
-        this.name = name;
+    public Illustration(String description, String url) {
         this.description = description;
         this.url = url;
     }
@@ -38,12 +35,6 @@ public class Illustration implements Serializable{
 
     public UUID getId() {
         return id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     public String getDescription() {
         return description;
@@ -88,7 +79,7 @@ public class Illustration implements Serializable{
     }
     @Override
     public String toString() {
-        return "Illustration [id=" + id + ", name=" + name + ", description=" + description + ", url=" + url + "]";
+        return "Illustration [id=" + id +" , description=" + description + ", url=" + url + "]";
     }
     
 }
