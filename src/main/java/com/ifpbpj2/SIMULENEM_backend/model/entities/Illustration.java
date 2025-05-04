@@ -3,6 +3,8 @@ package com.ifpbpj2.SIMULENEM_backend.model.entities;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.IllustrationRequestDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_ILLUSTRATION")
-public class Illustration implements Serializable{
+public class Illustration implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -23,31 +25,40 @@ public class Illustration implements Serializable{
 
     @Column(nullable = false)
     private String url;
-    
-    
+
     public Illustration() {
     }
+
     public Illustration(String description, String url) {
         this.description = description;
         this.url = url;
     }
-    
+
+    public Illustration(IllustrationRequestDTO illustrationRequestDTO) {
+        this.description = illustrationRequestDTO.description();
+        this.url = illustrationRequestDTO.url();
+    }
 
     public UUID getId() {
         return id;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public String getUrl() {
         return url;
     }
+
     public void setUrl(String url) {
         this.url = url;
     }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -56,6 +67,7 @@ public class Illustration implements Serializable{
         result = prime * result + ((url == null) ? 0 : url.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -77,9 +89,10 @@ public class Illustration implements Serializable{
             return false;
         return true;
     }
+
     @Override
     public String toString() {
-        return "Illustration [id=" + id +" , description=" + description + ", url=" + url + "]";
+        return "Illustration [id=" + id + " , description=" + description + ", url=" + url + "]";
     }
-    
+
 }

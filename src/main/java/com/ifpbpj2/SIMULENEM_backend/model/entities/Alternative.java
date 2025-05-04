@@ -3,6 +3,8 @@ package com.ifpbpj2.SIMULENEM_backend.model.entities;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.AlternativesRequestDTO;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +40,12 @@ public class Alternative implements Serializable {
         this.options = options;
         this.text = text;
         this.illustration = illustration;
+    }
+
+    public Alternative(AlternativesRequestDTO alternativesRequestDTO) {
+        this.options = alternativesRequestDTO.options();
+        this.text = alternativesRequestDTO.text();
+        //this.illustration = alternativesRequestDTO.illustration();
     }
 
     public static long getSerialversionuid() {

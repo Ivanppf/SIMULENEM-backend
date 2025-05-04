@@ -1,12 +1,15 @@
 package com.ifpbpj2.SIMULENEM_backend.business.services;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.QuestionRepository;
 
@@ -16,9 +19,11 @@ import jakarta.transaction.Transactional;
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final CategoryService categoryService;
 
-    public QuestionServiceImpl(QuestionRepository questionRepository) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, CategoryService categoryService) {
         this.questionRepository = questionRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -41,6 +46,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question save(Question question) {
+        Set<String> categoryNames = question.getCategories().stream().map((obj) -> obj.getName())
+                .collect(Collectors.toSet());
+        Set<Category> categories = categoryService.findByNameIn(categoryNames);
+        question.setCategories(categories);
         return questionRepository.save(question);
     }
 

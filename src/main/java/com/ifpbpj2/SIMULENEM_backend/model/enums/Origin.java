@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.model.entities;
+package com.ifpbpj2.SIMULENEM_backend.model.enums;
 
 public enum Origin {
     AREA_CONHECIMENTO_ENEM,

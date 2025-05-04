@@ -2,12 +2,16 @@ package com.ifpbpj2.SIMULENEM_backend.model.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.AlternativesRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 
 import jakarta.persistence.CascadeType;
@@ -19,6 +23,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -55,37 +61,47 @@ public class Question implements Serializable {
 
     private LocalDateTime lastUsedDate;
 
+    @ManyToMany
+    @JoinTable(name = "TB_CATEGORY_QUESTION", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
+
     public Question() {
         this.alternatives = new HashSet<>();
+        this.categories = new HashSet<>();
     }
 
     public Question(QuestionType questionType, String title, Illustration illustration,
-            Set<Alternative> alternatives, Difficulty difficulty, 
+            Set<Alternative> alternatives, Set<Category> categories, Difficulty difficulty,
             String expectedAnswer) {
         this.questionType = questionType;
         this.title = title;
         this.illustration = illustration;
         this.alternatives = alternatives;
+        this.categories = categories;
         this.difficulty = difficulty;
         this.expectedAnswer = expectedAnswer;
+        this.categories = new HashSet<>();
     }
 
-    public Question(UUID id, QuestionType questionType, String title, Difficulty difficulty,
+    public Question(UUID id, QuestionType questionType, String title, Set<Category> categories, Difficulty difficulty,
             LocalDateTime lastUsedDate) {
         this.id = id;
         this.questionType = questionType;
         this.title = title;
+        this.categories = categories;
         this.difficulty = difficulty;
         this.lastUsedDate = lastUsedDate;
+        this.categories = new HashSet<>();
     }
 
     public Question(QuestionRequestDTO obj) {
         this.questionType = obj.questionType();
         this.title = obj.title();
-        this.illustration = obj.illustration();
-        this.alternatives = obj.alternatives();
+        // this.illustration = new Illustration(obj.illustration());
+        this.alternatives = obj.alternatives().stream().map(Alternative::new).collect(Collectors.toSet());
         this.difficulty = obj.difficulty();
         this.expectedAnswer = obj.expectedAnswer();
+        this.categories = new HashSet<>();
     }
 
     public UUID getId() {
@@ -179,9 +195,17 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return "Question [id=" + id + ", questionType=" + questionType + ", title=" + title + ", difficulty="
-                + difficulty + " , expectedAnswer=" + expectedAnswer
-                + ", lastUsedDate=" + lastUsedDate + "]";
+        return "Question [id=" + id + ", questionType=" + questionType + ", title=" + title + ", illustration="
+                + illustration + ", alternatives=" + alternatives + ", difficulty=" + difficulty + ", expectedAnswer="
+                + expectedAnswer + ", lastUsedDate=" + lastUsedDate + ", categories=" + categories + "]";
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
 }

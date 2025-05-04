@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.ifpbpj2.SIMULENEM_backend.model.enums.Origin;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.CategoryRequestDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,7 +29,7 @@ public class Category {
 
     @Column(nullable = false)
     private String name;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Origin origin;
@@ -43,6 +46,12 @@ public class Category {
         this.questions = new ArrayList<>();
     }
 
+    public Category(CategoryRequestDTO obj) {
+        this.questions = new ArrayList<>();
+        this.name = obj.name();
+        this.origin = obj.origin();
+    }
+
     public Category(String name, Origin origin) {
         this.name = name;
         this.origin = origin;
@@ -51,6 +60,10 @@ public class Category {
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -115,6 +128,6 @@ public class Category {
     @Override
     public String toString() {
         return "Category [id=" + id + ", name=" + name + ", origin=" + origin + "]";
-    }    
-    
+    }
+
 }
