@@ -42,6 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new RuntimeException("Categoria com id " + uuid + " não encontrada"));
     }
 
+    @Override
     public Set<Category> findByNameIn(Set<String> names) {
         Set<Category> categories = categoryRepository.findByNameIn(names).stream().collect(Collectors.toSet());
         if (categories.isEmpty())

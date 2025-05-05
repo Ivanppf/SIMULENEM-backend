@@ -26,7 +26,7 @@ import jakarta.validation.Valid;
 @RestController
 @SessionScope
 @RequestMapping("/categories")
-public class CategoryControllerImpl {
+public class CategoryControllerImpl implements CategoryController {
 
     private final CategoryService categoryService;
 
@@ -34,11 +34,11 @@ public class CategoryControllerImpl {
         this.categoryService = categoryService;
     }
 
+    @Override
     @GetMapping
     public ResponseEntity<List<CategoryResponseDTO>> findById(
-        @RequestParam(value = "id", required = false) UUID id,
-        @RequestParam(value = "name", required = false) String name
-    ) {
+            @RequestParam(value = "id", required = false) UUID id,
+            @RequestParam(value = "name", required = false) String name) {
         Category category = new Category();
         category.setId(id);
         category.setName(name);
@@ -47,6 +47,7 @@ public class CategoryControllerImpl {
 
     }
 
+    @Override
     @PostMapping
     public ResponseEntity<CategoryResponseDTO> save(@RequestBody CategoryRequestDTO obj) {
         Category category = new Category(obj);
@@ -54,6 +55,7 @@ public class CategoryControllerImpl {
         return ResponseEntity.status(HttpStatus.CREATED).body(new CategoryResponseDTO(category));
     }
 
+    @Override
     @PutMapping("{id}")
     public ResponseEntity<CategoryResponseDTO> update(@PathVariable("id") UUID id,
             @Valid @RequestBody CategoryRequestDTO obj) {
@@ -62,6 +64,7 @@ public class CategoryControllerImpl {
         return ResponseEntity.ok().body(new CategoryResponseDTO(category));
     }
 
+    @Override
     @DeleteMapping("{id}")
     public ResponseEntity<CategoryResponseDTO> deleteById(@PathVariable("id") UUID id) {
         categoryService.deleteById(id);

@@ -97,7 +97,9 @@ public class Question implements Serializable {
     public Question(QuestionRequestDTO obj) {
         this.questionType = obj.questionType();
         this.title = obj.title();
-        // this.illustration = new Illustration(obj.illustration());
+        if (obj.illustration() != null) {
+            this.illustration = new Illustration(obj.illustration());
+        }
         this.alternatives = obj.alternatives().stream().map(Alternative::new).collect(Collectors.toSet());
         this.difficulty = obj.difficulty();
         this.expectedAnswer = obj.expectedAnswer();

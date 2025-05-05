@@ -45,7 +45,9 @@ public class Alternative implements Serializable {
     public Alternative(AlternativesRequestDTO alternativesRequestDTO) {
         this.options = alternativesRequestDTO.options();
         this.text = alternativesRequestDTO.text();
-        //this.illustration = alternativesRequestDTO.illustration();
+        if (alternativesRequestDTO.illustration() != null) {
+            this.illustration = new Illustration(alternativesRequestDTO.illustration());
+        }
     }
 
     public static long getSerialversionuid() {
