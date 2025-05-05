@@ -58,7 +58,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category update(UUID uuid, Category category) {
         existsById(uuid);
+        Category oldCategory = findById(uuid);
         category.setId(uuid);
+        category.setQuestions(oldCategory.getQuestions());
         return categoryRepository.save(category);
     }
 

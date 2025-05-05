@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Origin;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.CategoryRequestDTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,7 +35,6 @@ public class Category {
     @Column(nullable = false)
     private Origin origin;
 
-    @ManyToMany
     @JoinTable(
         name = "TB_CATEGORY_QUESTION",
         joinColumns = @JoinColumn(name = "category_id"),
