@@ -45,9 +45,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question save(Question question) {
-        Set<String> categoryNames = question.getCategories().stream().map((obj) -> obj.getName())
-                .collect(Collectors.toSet());
+    public Question save(Question question, Set<String> categoryNames) {
         Set<Category> categories = categoryService.findByNameIn(categoryNames);
         question.setCategories(categories);
         return questionRepository.save(question);

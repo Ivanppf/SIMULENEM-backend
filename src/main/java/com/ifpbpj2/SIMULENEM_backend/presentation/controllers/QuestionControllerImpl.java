@@ -67,8 +67,7 @@ public class QuestionControllerImpl implements QuestionController {
     @PostMapping
     public ResponseEntity<QuestionResponseDTO> save(@RequestBody @Valid QuestionRequestDTO obj) {
         Question question = new Question(obj);
-        question.setCategories(obj.categories().stream().map(Category::new).collect(Collectors.toSet()));
-        question = questionService.save(question);
+        question = questionService.save(question, obj.categories());
         return ResponseEntity.status(HttpStatus.CREATED).body(new QuestionResponseDTO(question));
     }
 
