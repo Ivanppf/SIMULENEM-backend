@@ -24,9 +24,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Alternative;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Illustration;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Origin;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
+import com.ifpbpj2.SIMULENEM_backend.model.enums.Origin;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 
 @DataJpaTest
@@ -76,21 +76,21 @@ class CategoryRepositoryTest {
             QuestionType.ABERTA,
             "What is the capital of France?",
             new Illustration("A map of Paris", "image1.test"),
-            alternatives01, Difficulty.FACIL,"a"
+            alternatives01, Set.of(), Difficulty.FACIL,"a"
         );
 
         Question question2 = new Question(
             QuestionType.FECHADA,
             "Which of the following are programming languages?",
             new Illustration("Snippet of code", "image5.test"),
-            alternatives02, Difficulty.FACIL,"a,b"
+            alternatives02, Set.of(),Difficulty.FACIL,"a,b"
         );
 
         Question question3 = new Question(
             QuestionType.FECHADA,
             "The Earth is flat.",
             new Illustration("Flat Earth illustration", "image9.test"),
-            alternatives03, Difficulty.FACIL,"b"
+            alternatives03, Set.of(), Difficulty.FACIL,"b"
         );
         questions.add(entityManager.persist(question1));
         questions.add(entityManager.persist(question2));
@@ -146,6 +146,6 @@ class CategoryRepositoryTest {
         category.setName("Português");
         Category update = categoryRepository.save(category);
         assertEquals(category.getName(), update.getName());
-        assertEquals(categories.size(),categoryRepository.count());
+        assertEquals(categories.size(), categoryRepository.count());
     }
 }

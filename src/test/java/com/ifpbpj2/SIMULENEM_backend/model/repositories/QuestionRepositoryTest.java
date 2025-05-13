@@ -62,21 +62,21 @@ class QuestionRepositoryTest {
             QuestionType.ABERTA,
             "What is the capital of France?",
             new Illustration("A map of Paris", "image1.test"),
-            alternatives01, Difficulty.MEDIO,"a"
+            alternatives01, Set.of(), Difficulty.MEDIO,"a"
         );
 
         Question question2 = new Question(
             QuestionType.FECHADA,
             "Which of the following are programming languages?",
             new Illustration("Snippet of code", "image5.test"),
-            alternatives02, Difficulty.FACIL,"a,b"
+            alternatives02, Set.of(), Difficulty.FACIL,"a,b"
         );
 
         Question question3 = new Question(
             QuestionType.FECHADA,
             "The Earth is flat.",
             new Illustration("Flat Earth illustration", "image9.test"),
-            alternatives03, Difficulty.FACIL,"b"
+            alternatives03, Set.of(), Difficulty.FACIL,"b"
         );
 
         questions.add(entityManager.persist(question1));
@@ -100,7 +100,7 @@ class QuestionRepositoryTest {
         alternatives.addAll(Set.of(alternative1, alternative2, alternative3));
         Question question = new Question(QuestionType.FECHADA,"Which planet is known as the Red Planet?",
             new Illustration("An illustration of Mars", "image15.test"),
-            alternatives, Difficulty.MEDIO, "c"
+            alternatives, Set.of(), Difficulty.MEDIO, "c"
         );
         Question questionSaved = questionRepository.save(question);
         assertNotNull(questionSaved.getId());
