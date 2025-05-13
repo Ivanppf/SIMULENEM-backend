@@ -1,5 +1,6 @@
 package com.ifpbpj2.SIMULENEM_backend.model.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -7,7 +8,6 @@ import java.util.UUID;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Origin;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.CategoryRequestDTO;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +22,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_CATEGORY")
-public class Category {
+public class Category implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,6 +36,7 @@ public class Category {
     @Column(nullable = false)
     private Origin origin;
 
+    @ManyToMany
     @JoinTable(
         name = "TB_CATEGORY_QUESTION",
         joinColumns = @JoinColumn(name = "category_id"),
