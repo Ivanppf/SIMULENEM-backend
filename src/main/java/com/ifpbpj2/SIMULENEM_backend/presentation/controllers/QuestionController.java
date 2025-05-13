@@ -1,6 +1,5 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.controllers;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;

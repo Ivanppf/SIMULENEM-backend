@@ -2,16 +2,13 @@ package com.ifpbpj2.SIMULENEM_backend.model.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
-import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.AlternativesRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 
 import jakarta.persistence.CascadeType;
@@ -23,7 +20,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -61,8 +57,7 @@ public class Question implements Serializable {
 
     private LocalDateTime lastUsedDate;
 
-    @ManyToMany
-    @JoinTable(name = "TB_CATEGORY_QUESTION", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @ManyToMany(mappedBy = "questions")
     private Set<Category> categories;
 
     public Question() {

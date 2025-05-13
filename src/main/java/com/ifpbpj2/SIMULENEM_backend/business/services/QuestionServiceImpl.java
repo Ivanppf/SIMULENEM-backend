@@ -3,7 +3,6 @@ package com.ifpbpj2.SIMULENEM_backend.business.services;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -13,7 +12,6 @@ import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.QuestionRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
