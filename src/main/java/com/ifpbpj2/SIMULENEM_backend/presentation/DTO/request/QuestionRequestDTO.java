@@ -1,11 +1,7 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Alternative;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Illustration;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 

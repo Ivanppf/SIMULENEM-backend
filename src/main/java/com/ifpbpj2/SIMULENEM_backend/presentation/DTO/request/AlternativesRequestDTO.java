@@ -1,6 +1,5 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Illustration;
 
 import jakarta.validation.constraints.NotNull;
 
