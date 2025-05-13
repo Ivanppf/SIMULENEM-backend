@@ -9,6 +9,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.CategoryNotFoundException;
+import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.EntityInUseException;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.CategoryRepository;
 
@@ -22,7 +24,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public Category findByName(String name) {
-        return categoryRepository.findByName(name);
+        return categoryRepository.findByName(name)
+                .orElseThrow(() -> new CategoryNotFoundException("Categoria com o nome " + name + " não foi encontrada" ));
     }
 
     @Override
@@ -37,16 +40,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findById(UUID uuid) {
-        existsById(uuid);
         return categoryRepository.findById(uuid)
-                .orElseThrow(() -> new RuntimeException("Categoria com id " + uuid + " não encontrada"));
+                .orElseThrow(() -> new CategoryNotFoundException(uuid));
     }
 
     @Override
     public Set<Category> findByNameIn(Set<String> names) {
         Set<Category> categories = categoryRepository.findByNameIn(names).stream().collect(Collectors.toSet());
         if (categories.isEmpty())
-            throw new RuntimeException("Não há nenhuma categoria com estes nomes");
+            throw new CategoryNotFoundException("Não há nenhuma categoria com estes nomes");
         return categories;
     }
 
@@ -58,7 +60,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(UUID uuid, Category category) {
-        existsById(uuid);
         Category oldCategory = findById(uuid);
         category.setId(uuid);
         category.setQuestions(oldCategory.getQuestions());
@@ -67,18 +68,18 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteById(UUID uuid) {
-        Category categories = findById(uuid);
-        if (categories.getQuestions().isEmpty()) {
-            categoryRepository.deleteById(uuid);
+        Category category = findById(uuid);
+        if (category.getQuestions().isEmpty()) {
+            categoryRepository.delete(category);
         } else {
-            throw new RuntimeException("Ainda há questões cadastradas com essa categoria");
+            throw new EntityInUseException("Ainda há questões cadastradas com essa categoria");
         }
     }
 
     @Override
     public void existsById(UUID uuid) {
         if (!categoryRepository.existsById(uuid)) {
-            throw new RuntimeException("Categoria com id " + uuid + " não encontrada");
+            throw new CategoryNotFoundException(uuid);
         }
     }
 
