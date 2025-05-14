@@ -1,6 +1,7 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.controllers;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -69,6 +70,23 @@ public class QuestionControllerImpl implements QuestionController {
         question = questionService.save(question, obj.categories());
         return ResponseEntity.status(HttpStatus.CREATED).body(new QuestionResponseDTO(question));
     }
+
+    @Override
+    @PostMapping("/all")
+    public ResponseEntity<List<QuestionResponseDTO>> saveAll(@RequestBody @Valid List<QuestionRequestDTO> objList) {
+        List<Question> questionList = new ArrayList<>();
+        objList.forEach(q -> {
+            questionList.add(new Question(q));
+        });
+        List<Question> savedQuestions = questionService.saveAll(questionList);
+        List<QuestionResponseDTO> savedQuestionsDTO = new ArrayList<>();
+        savedQuestions.forEach(q -> {
+            savedQuestionsDTO.add(new QuestionResponseDTO(q));
+        });
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestionsDTO);
+    }
+
 
     @Override
     @PutMapping("/{id}")

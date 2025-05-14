@@ -14,10 +14,12 @@ public interface QuestionService {
 
     Question save(Question question, Set<String> categoryNames);
 
+    List<Question> saveAll(List<Question> questionList);
+
     Question update(UUID uuid, Question question);
 
     void deleteById(UUID uuid);
 
     void existsById(UUID uuid);
-    
+
 }

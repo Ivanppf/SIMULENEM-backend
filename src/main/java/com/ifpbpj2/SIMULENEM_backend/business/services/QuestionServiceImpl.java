@@ -50,6 +50,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<Question> saveAll(List<Question> questionList) {
+        return questionRepository.saveAll(questionList);
+    }
+
+    @Override
     public Question update(UUID uuid, Question question) {
         existsById(uuid);
         question.setId(uuid);
