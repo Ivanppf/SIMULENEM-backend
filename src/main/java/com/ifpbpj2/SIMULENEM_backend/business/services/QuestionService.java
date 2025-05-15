@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 
 public interface QuestionService {
 
-    List<Question> find(Question question);
+    Page<Question> find(Pageable pageable, Question question);
 
     Question findById(UUID uuid);
 

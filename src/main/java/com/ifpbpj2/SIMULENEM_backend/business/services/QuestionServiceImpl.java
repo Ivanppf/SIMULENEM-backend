@@ -6,12 +6,13 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.QuestionRepository;
-
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -25,13 +26,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> find(Question questionFilter) {
+    public Page<Question> find(Pageable pageable, Question questionFilter) {
 
         Example example = Example.of(questionFilter,
                 ExampleMatcher.matching()
                         .withIgnoreCase()
                         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
-        return questionRepository.findAll(example);
+        return questionRepository.findAll(example, pageable);
 
     }
 

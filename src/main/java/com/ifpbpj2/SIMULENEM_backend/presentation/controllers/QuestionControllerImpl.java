@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,6 +48,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @GetMapping
     public ResponseEntity<List<QuestionResponseDTO>> find(
+            Pageable pageable,
             @RequestParam(value = "id", required = false) UUID id,
             @RequestParam(value = "questionType", required = false) QuestionType questionType,
             @RequestParam(value = "title", required = false) String title,
@@ -58,7 +61,7 @@ public class QuestionControllerImpl implements QuestionController {
             categories = categoryService.findByNameIn(categoryNames);
         }
         Question questionFilter = new Question(id, questionType, title, categories, difficulty, lastUsedDate);
-        List<Question> questions = questionService.find(questionFilter);
+        Page<Question> questions = questionService.find(pageable, questionFilter);
         return ResponseEntity.ok().body(questions.stream().map(QuestionResponseDTO::new).toList());
 
     }
@@ -86,7 +89,6 @@ public class QuestionControllerImpl implements QuestionController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestionsDTO);
     }
-
 
     @Override
     @PutMapping("/{id}")
