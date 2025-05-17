@@ -20,6 +20,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -57,7 +58,12 @@ public class Question implements Serializable {
 
     private LocalDateTime lastUsedDate;
 
-    @ManyToMany(mappedBy = "questions")
+    @ManyToMany
+    @JoinTable(
+        name = "TB_CATEGORY_QUESTION",
+        joinColumns = @JoinColumn(name = "question_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private Set<Category> categories;
 
     public Question() {

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 
 public interface QuestionService {
 
@@ -15,7 +16,7 @@ public interface QuestionService {
 
     Question findById(UUID uuid);
 
-    Question save(Question question, Set<String> categoryNames);
+    Question save(Question question, Set<CategoryResponseDTO> categoryNames);
 
     List<Question> saveAll(List<Question> questionList);
 
