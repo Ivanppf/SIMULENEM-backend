@@ -1,7 +1,6 @@
 package com.ifpbpj2.SIMULENEM_backend.model.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,8 +14,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
@@ -36,20 +33,13 @@ public class Category implements Serializable {
     @Column(nullable = false)
     private Origin origin;
 
-    @ManyToMany
-    @JoinTable(
-        name = "TB_CATEGORY_QUESTION",
-        joinColumns = @JoinColumn(name = "category_id"),
-        inverseJoinColumns = @JoinColumn(name = "question_id")
-    )
+    @ManyToMany(mappedBy = "categories")
     private List<Question> questions;
 
     public Category() {
-        this.questions = new ArrayList<>();
     }
 
     public Category(CategoryRequestDTO obj) {
-        this.questions = new ArrayList<>();
         this.name = obj.name();
         this.origin = obj.origin();
     }
@@ -57,7 +47,6 @@ public class Category implements Serializable {
     public Category(String name, Origin origin) {
         this.name = name;
         this.origin = origin;
-        this.questions = new ArrayList<>();
     }
 
     public UUID getId() {
@@ -92,7 +81,7 @@ public class Category implements Serializable {
         this.questions = questions;
     }
 
-    public void addQuestions(Question question){
+    public void addQuestions(Question question) {
         this.questions.add(question);
     }
 

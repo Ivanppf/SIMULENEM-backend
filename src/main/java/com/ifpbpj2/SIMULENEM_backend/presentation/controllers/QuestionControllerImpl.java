@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,7 +80,14 @@ public class QuestionControllerImpl implements QuestionController {
     public ResponseEntity<List<QuestionResponseDTO>> saveAll(@RequestBody @Valid List<QuestionRequestDTO> objList) {
         List<Question> questionList = new ArrayList<>();
         objList.forEach(q -> {
-            questionList.add(new Question(q));
+            Question newQuestion = new Question(q);
+            Set<Category> categories = q.categories().stream().map(c -> {
+                Category novaCategory = new Category(c.name(), c.origin());
+                novaCategory.setId(c.id());
+                return novaCategory;
+            }).collect(Collectors.toSet());
+            newQuestion.setCategories(categories);
+            questionList.add(newQuestion);
         });
         List<Question> savedQuestions = questionService.saveAll(questionList);
         List<QuestionResponseDTO> savedQuestionsDTO = new ArrayList<>();

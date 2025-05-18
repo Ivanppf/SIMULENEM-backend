@@ -2,7 +2,6 @@ package com.ifpbpj2.SIMULENEM_backend.model.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -59,6 +58,7 @@ public class Question implements Serializable {
     private LocalDateTime lastUsedDate;
 
     @ManyToMany
+    @Column(nullable = false)
     @JoinTable(
         name = "TB_CATEGORY_QUESTION",
         joinColumns = @JoinColumn(name = "question_id"),
@@ -67,8 +67,6 @@ public class Question implements Serializable {
     private Set<Category> categories;
 
     public Question() {
-        this.alternatives = new HashSet<>();
-        this.categories = new HashSet<>();
     }
 
     public Question(QuestionType questionType, String title, Illustration illustration,
@@ -81,7 +79,6 @@ public class Question implements Serializable {
         this.categories = categories;
         this.difficulty = difficulty;
         this.expectedAnswer = expectedAnswer;
-        this.categories = new HashSet<>();
     }
 
     public Question(UUID id, QuestionType questionType, String title, Set<Category> categories, Difficulty difficulty,
@@ -92,7 +89,6 @@ public class Question implements Serializable {
         this.categories = categories;
         this.difficulty = difficulty;
         this.lastUsedDate = lastUsedDate;
-        this.categories = new HashSet<>();
     }
 
     public Question(QuestionRequestDTO obj) {
@@ -104,7 +100,6 @@ public class Question implements Serializable {
         this.alternatives = obj.alternatives().stream().map(Alternative::new).collect(Collectors.toSet());
         this.difficulty = obj.difficulty();
         this.expectedAnswer = obj.expectedAnswer();
-        this.categories = new HashSet<>();
     }
 
     public UUID getId() {

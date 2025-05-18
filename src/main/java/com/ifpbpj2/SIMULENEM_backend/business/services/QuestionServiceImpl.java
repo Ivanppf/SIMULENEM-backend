@@ -1,6 +1,5 @@
 package com.ifpbpj2.SIMULENEM_backend.business.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -59,13 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> saveAll(List<Question> questionList) {
-        
-        // questionList.forEach(question -> {
-        //     Set<Category> categories = categoryService.findByNameIn(question.getCategories().forEach());
-        // question.setCategories(categories);
-        // });
-        // return questionRepository.saveAll(questionList);
-        return new ArrayList<>();
+        return questionRepository.saveAll(questionList);
     }
 
     @Override
