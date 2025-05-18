@@ -1,11 +1,13 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.controllers;
 
+import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,7 @@ import java.util.UUID;
 
 public interface QuestionController {
 
-    ResponseEntity<List<QuestionResponseDTO>> find(
+    ResponseEntity<Page<QuestionResponseDTO>> find(
             Pageable pageable,
             UUID id,
             QuestionType questionType,

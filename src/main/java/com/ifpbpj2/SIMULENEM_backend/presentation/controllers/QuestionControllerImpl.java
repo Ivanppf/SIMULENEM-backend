@@ -48,7 +48,7 @@ public class QuestionControllerImpl implements QuestionController {
 
     @Override
     @GetMapping
-    public ResponseEntity<List<QuestionResponseDTO>> find(
+    public ResponseEntity<Page<QuestionResponseDTO>> find(
             Pageable pageable,
             @RequestParam(value = "id", required = false) UUID id,
             @RequestParam(value = "questionType", required = false) QuestionType questionType,
@@ -63,7 +63,7 @@ public class QuestionControllerImpl implements QuestionController {
         }
         Question questionFilter = new Question(id, questionType, title, categories, difficulty, lastUsedDate);
         Page<Question> questions = questionService.find(pageable, questionFilter);
-        return ResponseEntity.ok().body(questions.stream().map(QuestionResponseDTO::new).toList());
+        return ResponseEntity.ok().body(questions.map(QuestionResponseDTO::new));
 
     }
 
