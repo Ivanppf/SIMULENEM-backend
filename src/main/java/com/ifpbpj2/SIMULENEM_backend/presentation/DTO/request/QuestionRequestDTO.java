@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
-import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ public record QuestionRequestDTO(
                 @NotBlank(message = "Por favor informe o título da questão") String title,
                 IllustrationRequestDTO illustration,
                 @NotNull(message = "Por favor informe as alternativas") Set<AlternativesRequestDTO> alternatives,
-                @NotNull(message = "Por favor informe ao menos uma categoria") Set<CategoryResponseDTO> categories,
+                @NotNull(message = "Por favor informe ao menos uma categoria") Set<String> categories,
                 @NotNull(message = "Por favor informe a dificuldade da questão") Difficulty difficulty,
                 @NotBlank(message = "Por favor informe a resposta esperada") String expectedAnswer) {
 

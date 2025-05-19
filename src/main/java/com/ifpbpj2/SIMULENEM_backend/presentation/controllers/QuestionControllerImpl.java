@@ -27,8 +27,10 @@ import com.ifpbpj2.SIMULENEM_backend.business.services.QuestionService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
+import com.ifpbpj2.SIMULENEM_backend.model.enums.Origin;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
 
 import jakarta.validation.Valid;
@@ -70,8 +72,11 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @PostMapping
     public ResponseEntity<QuestionResponseDTO> save(@RequestBody @Valid QuestionRequestDTO obj) {
+        Set<CategoryResponseDTO> categories = obj.categories().stream().map(categoryName -> {
+              return new CategoryResponseDTO(UUID.fromString(categoryName), null, null);
+        }).collect(Collectors.toSet());
         Question question = new Question(obj);
-        question = questionService.save(question, obj.categories());
+        question = questionService.save(question, categories);
         return ResponseEntity.status(HttpStatus.CREATED).body(new QuestionResponseDTO(question));
     }
 
@@ -82,8 +87,8 @@ public class QuestionControllerImpl implements QuestionController {
         objList.forEach(q -> {
             Question newQuestion = new Question(q);
             Set<Category> categories = q.categories().stream().map(c -> {
-                Category novaCategory = new Category(c.name(), c.origin());
-                novaCategory.setId(c.id());
+                Category novaCategory = new Category();
+                novaCategory.setId(UUID.fromString(c));
                 return novaCategory;
             }).collect(Collectors.toSet());
             newQuestion.setCategories(categories);
