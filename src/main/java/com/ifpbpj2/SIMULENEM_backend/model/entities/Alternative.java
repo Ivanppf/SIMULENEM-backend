@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.AlternativesRequestDTO;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,9 +23,6 @@ public class Alternative implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private char options;
-
     private String text;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -36,14 +32,12 @@ public class Alternative implements Serializable {
     public Alternative() {
     }
 
-    public Alternative(char options, String text, Illustration illustration) {
-        this.options = options;
+    public Alternative(String text, Illustration illustration) {
         this.text = text;
         this.illustration = illustration;
     }
 
     public Alternative(AlternativesRequestDTO alternativesRequestDTO) {
-        this.options = alternativesRequestDTO.options();
         this.text = alternativesRequestDTO.text();
         if (alternativesRequestDTO.illustration() != null) {
             this.illustration = new Illustration(alternativesRequestDTO.illustration());
@@ -52,14 +46,6 @@ public class Alternative implements Serializable {
 
     public static long getSerialversionuid() {
         return serialVersionUID;
-    }
-
-    public char getOptions() {
-        return options;
-    }
-
-    public void setOptions(char options) {
-        this.options = options;
     }
 
     public String getText() {
@@ -87,7 +73,8 @@ public class Alternative implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + options;
+        result = prime * result + ((text == null) ? 0 : text.hashCode());
+        result = prime * result + ((illustration == null) ? 0 : illustration.hashCode());
         return result;
     }
 
@@ -105,15 +92,22 @@ public class Alternative implements Serializable {
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (options != other.options)
+        if (text == null) {
+            if (other.text != null)
+                return false;
+        } else if (!text.equals(other.text))
+            return false;
+        if (illustration == null) {
+            if (other.illustration != null)
+                return false;
+        } else if (!illustration.equals(other.illustration))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Alternative [id=" + id + ", options=" + options + ", text=" + text + ", illustration=" + illustration
-                + "]";
+        return "Alternative [id=" + id + ", text=" + text + ", illustration=" + illustration + "]";
     }
 
 }
