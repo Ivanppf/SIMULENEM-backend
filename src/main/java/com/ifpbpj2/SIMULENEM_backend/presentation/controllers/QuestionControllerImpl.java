@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,9 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import com.ifpbpj2.SIMULENEM_backend.business.services.CategoryService;
 import com.ifpbpj2.SIMULENEM_backend.business.services.QuestionService;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
-import com.ifpbpj2.SIMULENEM_backend.model.enums.Origin;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
@@ -51,7 +51,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @GetMapping
     public ResponseEntity<Page<QuestionResponseDTO>> find(
-            Pageable pageable,
+            @ParameterObject Pageable pageable,
             @RequestParam(value = "id", required = false) UUID id,
             @RequestParam(value = "questionType", required = false) QuestionType questionType,
             @RequestParam(value = "title", required = false) String title,
@@ -87,9 +87,9 @@ public class QuestionControllerImpl implements QuestionController {
         objList.forEach(q -> {
             Question newQuestion = new Question(q);
             Set<Category> categories = q.categories().stream().map(c -> {
-                Category novaCategory = new Category();
-                novaCategory.setId(UUID.fromString(c));
-                return novaCategory;
+                Category newCategory = new Category();
+                newCategory.setId(UUID.fromString(c));
+                return newCategory;
             }).collect(Collectors.toSet());
             newQuestion.setCategories(categories);
             questionList.add(newQuestion);
@@ -107,8 +107,7 @@ public class QuestionControllerImpl implements QuestionController {
     @PutMapping("/{id}")
     public ResponseEntity<QuestionResponseDTO> update(@PathVariable("id") UUID id,
             @Valid @RequestBody QuestionRequestDTO obj) {
-        Question question = new Question(obj);
-        question = questionService.update(id, question);
+        Question question = questionService.update(id, obj);
         return ResponseEntity.ok().body(new QuestionResponseDTO(question));
     }
 

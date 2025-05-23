@@ -11,9 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.QuestionRepository;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 
 @Service
@@ -48,9 +49,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question save(Question question, Set<CategoryResponseDTO> categoryDTOList) {
         Set<Category> categories = categoryDTOList.stream().map(c -> {
-            Category novaCategory = new Category(c.name(), c.origin());
-            novaCategory.setId(c.id());
-            return novaCategory;
+            Category newCategory = new Category(c.name(), c.origin());
+            newCategory.setId(c.id());
+            return newCategory;
         }).collect(Collectors.toSet());
         question.setCategories(categories);
         return questionRepository.save(question);
@@ -62,10 +63,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question update(UUID uuid, Question question) {
+    public Question update(UUID uuid, QuestionRequestDTO question) {
         existsById(uuid);
-        question.setId(uuid);
-        return questionRepository.save(question);
+        Set<Category> categories = question.categories().stream().map(
+                category -> categoryService.findById(UUID.fromString(category)))
+                .collect(Collectors.toSet());
+        Question questionUpdate = new Question(question);
+        questionUpdate.setCategories(categories);
+        questionUpdate.setId(uuid);
+        return questionRepository.save(questionUpdate);
     }
 
     @Override

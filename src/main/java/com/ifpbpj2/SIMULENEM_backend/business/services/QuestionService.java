@@ -7,7 +7,8 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 
 public interface QuestionService {
@@ -20,7 +21,7 @@ public interface QuestionService {
 
     List<Question> saveAll(List<Question> questionList);
 
-    Question update(UUID uuid, Question question);
+    Question update(UUID uuid, QuestionRequestDTO question);
 
     void deleteById(UUID uuid);
 
