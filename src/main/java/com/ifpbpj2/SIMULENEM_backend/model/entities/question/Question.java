@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.model.entities;
+package com.ifpbpj2.SIMULENEM_backend.model.entities.question;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

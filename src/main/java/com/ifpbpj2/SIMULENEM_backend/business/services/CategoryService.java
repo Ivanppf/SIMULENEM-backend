@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 
 public interface CategoryService {
 

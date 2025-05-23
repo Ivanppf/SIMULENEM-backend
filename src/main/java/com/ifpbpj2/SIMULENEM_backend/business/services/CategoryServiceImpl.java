@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.CategoryNotFoundException;
 import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.EntityInUseException;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.CategoryRepository;
 
 @Service
