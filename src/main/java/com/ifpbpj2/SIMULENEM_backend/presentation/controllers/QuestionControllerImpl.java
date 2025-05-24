@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.ifpbpj2.SIMULENEM_backend.business.services.CategoryService;
-import com.ifpbpj2.SIMULENEM_backend.business.services.QuestionService;
+import com.ifpbpj2.SIMULENEM_backend.business.services.question.CategoryService;
+import com.ifpbpj2.SIMULENEM_backend.business.services.question.QuestionService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
@@ -67,6 +67,13 @@ public class QuestionControllerImpl implements QuestionController {
         Page<Question> questions = questionService.find(pageable, questionFilter);
         return ResponseEntity.ok().body(questions.map(QuestionResponseDTO::new));
 
+    }
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<QuestionResponseDTO> findById(@PathVariable("id") UUID id) {
+        Question question = questionService.findById(id);
+        return ResponseEntity.ok().body(new QuestionResponseDTO(question));
     }
 
     @Override

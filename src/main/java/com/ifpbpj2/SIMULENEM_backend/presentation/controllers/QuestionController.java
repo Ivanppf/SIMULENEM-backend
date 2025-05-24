@@ -28,11 +28,13 @@ public interface QuestionController {
             Difficulty difficulty,
             LocalDateTime lastUsedDate);
 
-    ResponseEntity<QuestionResponseDTO> save(@RequestBody @Valid QuestionRequestDTO obj);
+    ResponseEntity<QuestionResponseDTO> findById( UUID id)
 
-    ResponseEntity<List<QuestionResponseDTO>> saveAll(@RequestBody @Valid List<QuestionRequestDTO> objList);
+    ResponseEntity<QuestionResponseDTO> save(QuestionRequestDTO obj);
 
-    ResponseEntity<QuestionResponseDTO> update(@PathVariable("id") UUID id, @Valid @RequestBody QuestionRequestDTO obj);
+    ResponseEntity<List<QuestionResponseDTO>> saveAll(List<QuestionRequestDTO> objList);
 
-    ResponseEntity<QuestionResponseDTO> deleteById(@PathVariable("id") UUID id);
+    ResponseEntity<QuestionResponseDTO> update(UUID id, QuestionRequestDTO obj);
+
+    ResponseEntity<QuestionResponseDTO> deleteById(UUID id);
 }
