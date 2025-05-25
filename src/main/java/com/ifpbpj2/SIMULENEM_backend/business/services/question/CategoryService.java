@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.business.services;
+package com.ifpbpj2.SIMULENEM_backend.business.services.question;
 
 import java.util.List;
 import java.util.Set;

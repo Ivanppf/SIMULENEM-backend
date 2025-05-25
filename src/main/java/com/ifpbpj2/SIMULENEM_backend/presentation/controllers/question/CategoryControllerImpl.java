@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.presentation.controllers;
+package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.question;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.ifpbpj2.SIMULENEM_backend.business.services.CategoryService;
+import com.ifpbpj2.SIMULENEM_backend.business.services.question.CategoryService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.CategoryRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;

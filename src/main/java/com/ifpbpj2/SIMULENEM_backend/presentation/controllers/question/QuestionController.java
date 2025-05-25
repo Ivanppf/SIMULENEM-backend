@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.presentation.controllers;
+package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.question;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
@@ -28,7 +28,7 @@ public interface QuestionController {
             Difficulty difficulty,
             LocalDateTime lastUsedDate);
 
-    ResponseEntity<QuestionResponseDTO> findById( UUID id)
+    ResponseEntity<QuestionResponseDTO> findById( UUID id);
 
     ResponseEntity<QuestionResponseDTO> save(QuestionRequestDTO obj);
 

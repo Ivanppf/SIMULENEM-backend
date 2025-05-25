@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.business.services;
+package com.ifpbpj2.SIMULENEM_backend.business.services.question;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.CategoryNotFoundException;
 import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.EntityInUseException;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
-import com.ifpbpj2.SIMULENEM_backend.model.repositories.CategoryRepository;
+import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.CategoryRepository;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {

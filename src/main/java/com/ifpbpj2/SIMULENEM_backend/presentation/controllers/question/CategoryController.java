@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.presentation.controllers;
+package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.question;
 
 import java.util.List;
 import java.util.UUID;

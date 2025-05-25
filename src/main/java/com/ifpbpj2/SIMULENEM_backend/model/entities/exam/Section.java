@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
-import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.SectionRequestDTO;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

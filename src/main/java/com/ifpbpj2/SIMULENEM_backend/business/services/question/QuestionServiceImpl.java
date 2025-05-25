@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.business.services;
+package com.ifpbpj2.SIMULENEM_backend.business.services.question;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
-import com.ifpbpj2.SIMULENEM_backend.model.repositories.QuestionRepository;
+import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.QuestionRepository;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 

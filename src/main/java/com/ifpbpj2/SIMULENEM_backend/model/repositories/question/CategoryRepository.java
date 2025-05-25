@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.model.repositories;
+package com.ifpbpj2.SIMULENEM_backend.model.repositories.question;
 
 import java.util.List;
 import java.util.Optional;
