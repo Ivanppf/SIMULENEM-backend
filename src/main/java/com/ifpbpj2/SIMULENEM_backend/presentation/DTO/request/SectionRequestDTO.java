@@ -1,13 +1,17 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request;
 
 import java.util.Set;
+import java.util.UUID;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.QuestionExam;
+import jakarta.validation.constraints.NotNull;
 
 public record SectionRequestDTO(
+    @NotNull
     Integer position,
     String title,
-    Set<QuestionExam> questions
+    Set<QuestionExamRequestDTO> questions,
+    @NotNull
+    UUID examUuid
 ) {
 
 }
