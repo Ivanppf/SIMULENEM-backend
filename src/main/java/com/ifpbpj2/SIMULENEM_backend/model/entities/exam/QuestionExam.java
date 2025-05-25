@@ -37,12 +37,19 @@ public class QuestionExam implements Serializable {
     public QuestionExam() {
     }
     
-    public QuestionExam(int position, double scoreQuestion, Question question) {
+    public QuestionExam(int position, double scoreQuestion, Question question, Section section) {
         this.position = position;
         this.scoreQuestion = scoreQuestion;
         this.question = question;
+        this.section = section;
     }
     
+    public QuestionExam(QuestionExamRequestDTO obj, Question question) {
+        this.position = obj.position();
+        this.scoreQuestion = getScoreQuestion();
+        this.question = question;
+    }
+
     public Section getSection() {
         return section;
     }
@@ -62,7 +69,7 @@ public class QuestionExam implements Serializable {
     public void setPosition(Integer position) {
         this.position = position;
     }
-    public double getScoreQuestion() {
+    public Double getScoreQuestion() {
         return scoreQuestion;
     }
     public void setScoreQuestion(double scoreQuestion) {

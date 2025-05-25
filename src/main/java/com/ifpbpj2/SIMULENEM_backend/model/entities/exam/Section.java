@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -28,13 +30,18 @@ public class Section implements Serializable {
     @OneToMany(mappedBy = "section")
     private Set<QuestionExam> questions;
 
+    @ManyToOne
+    @JoinColumn(name = "EXAM_ID")
+    private Exam exam;
+
     public Section() {
     }
 
-    public Section(Integer position, String title, Set<QuestionExam> questions) {
+    public Section(Integer position, String title, Set<QuestionExam> questions, Exam exam) {
         this.position = position;
         this.title = title;
         this.questions = questions;
+        this.exam = exam;
     }
 
     public double getScoreSection(){
@@ -66,6 +73,13 @@ public class Section implements Serializable {
     public void setQuestions(Set<QuestionExam> questions) {
         this.questions = questions;
     }
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
 
     @Override
     public int hashCode() {
@@ -74,29 +88,29 @@ public class Section implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((position == null) ? 0 : position.hashCode());
         return result;
-    }
+    }    
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (obj == null)    
             return false;
-        if (getClass() != obj.getClass())
+        if (getClass() != obj.getClass())    
             return false;
-        Section other = (Section) obj;
+        Section other = (Section) obj;    
         if (id == null) {
             if (other.id != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!id.equals(other.id))        
             return false;
         if (position == null) {
             if (other.position != null)
                 return false;
-        } else if (!position.equals(other.position))
+        } else if (!position.equals(other.position))        
             return false;
-        return true;
-    }
+        return true;    
+    }    
 
 
 

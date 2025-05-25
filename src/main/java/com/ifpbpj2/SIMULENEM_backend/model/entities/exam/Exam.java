@@ -30,8 +30,7 @@ public class Exam implements Serializable {
     private LocalDate applicationDate;
     private boolean resultPublished;
 
-    @OneToMany
-    @JoinColumn(name = "SECTION_ID")
+    @OneToMany(mappedBy = "exam")
     private Set<Section> sections;
     
     public Exam() {
