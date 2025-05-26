@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpbpj2.SIMULENEM_backend.business.services.exam.ExamService;
-import com.ifpbpj2.SIMULENEM_backend.business.services.exam.ExamServiceImpl;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
 
 @RestController
 @RequestMapping("/exams")
@@ -30,28 +30,27 @@ public class ExamControllerImpl {
     }
 
     @GetMapping
-    public ResponseEntity<List<Exam>> findAll() {
-        List<Exam> exams = examService.findAll();
+    public ResponseEntity<List<ExamResponseDTO>> findAll() {
+        List<ExamResponseDTO> exams = examService.findAll();
         return ResponseEntity.ok().body(exams);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Exam> findById(@PathVariable("id") UUID id) {
-        Exam exam = examService.findById(id);
+    public ResponseEntity<ExamResponseDTO> findById(@PathVariable("id") UUID id) {
+        ExamResponseDTO exam = new ExamResponseDTO(examService.findById(id));
         return ResponseEntity.ok().body(exam);
     }
 
     @PostMapping
-    public ResponseEntity<Exam> save(@RequestBody ExamRequestDTO obj) {
+    public ResponseEntity<ExamResponseDTO> save(@RequestBody ExamRequestDTO obj) {
         Exam exam = new Exam(obj);
-        Exam savedExam = examService.save(exam);
+        ExamResponseDTO savedExam = examService.save(exam);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedExam);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Exam> update(@PathVariable("id") UUID id, @RequestBody ExamRequestDTO obj) {
-        Exam exam = new Exam(obj);
-        Exam updatedExam = examService.update(id, exam);
+    public ResponseEntity<ExamResponseDTO> update(@PathVariable("id") UUID id, @RequestBody ExamRequestDTO obj) {
+        ExamResponseDTO updatedExam = examService.update(id, obj);
         return ResponseEntity.ok().body(updatedExam);
     }
 
