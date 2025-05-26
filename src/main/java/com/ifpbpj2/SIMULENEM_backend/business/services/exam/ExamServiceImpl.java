@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.ExamRepository;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionExamResponseDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.SectionResponseDTO;
 
 @Service
 public class ExamServiceImpl implements ExamService {
@@ -19,8 +23,9 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public List<Exam> findAll() {
-        return examRepository.findAll();
+    public List<ExamResponseDTO> findAll() {
+        return examRepository.findAll().stream()
+            .map(ExamResponseDTO::new).toList();
     }
 
     @Override
@@ -30,15 +35,16 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Exam save(Exam exam) {
-        return examRepository.save(exam);
+    public ExamResponseDTO save(Exam exam) {
+        return new ExamResponseDTO(examRepository.save(exam));
     }
 
     @Override
-    public Exam update(UUID id, Exam exam) {
-        findById(id);
-        exam.setId(id);
-        return examRepository.save(exam);
+    public ExamResponseDTO update(UUID id, ExamRequestDTO examUpdate) {
+        Exam exam = findById(id);
+        exam.setApplicationDate(examUpdate.applicationDate());
+        exam.setResultPublished(examUpdate.resultPublished());
+        return new ExamResponseDTO(examRepository.save(exam));
     }
 
     @Override

@@ -4,16 +4,18 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
 
 public interface ExamService {
 
-    List<Exam> findAll();
+    List<ExamResponseDTO> findAll();
 
     Exam findById(UUID id);
 
-    Exam save(Exam exam);
+    ExamResponseDTO save(Exam exam);
 
-    Exam update(UUID id, Exam exam);
+    ExamResponseDTO update(UUID id, ExamRequestDTO exam);
 
     void deleteById(UUID id);
 
