@@ -2,16 +2,17 @@ package com.ifpbpj2.SIMULENEM_backend.model.entities.exam;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -30,7 +31,7 @@ public class Exam implements Serializable {
     private LocalDate applicationDate;
     private boolean resultPublished;
 
-    @OneToMany(mappedBy = "exam")
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private Set<Section> sections;
     
     public Exam() {
@@ -39,13 +40,17 @@ public class Exam implements Serializable {
     public Exam(ExamRequestDTO obj) {
         this.applicationDate = obj.applicationDate();
         this.resultPublished = obj.resultPublished();
-        this.sections = obj.sections();
     }
 
-    public Exam(LocalDate applicationDate, boolean resultPublished, Set<Section> sections) {
+    public Exam(LocalDate applicationDate, boolean resultPublished) {
         this.applicationDate = applicationDate;
         this.resultPublished = resultPublished;
-        this.sections = sections;
+        this.sections = new HashSet<>();
+    }
+
+    public void addSection(Section section){
+        section.setExam(this);
+        sections.add(section);
     }
 
     public double getTotalScore() {

@@ -1,9 +1,11 @@
 package com.ifpbpj2.SIMULENEM_backend.model.entities.exam;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +30,7 @@ public class Section implements Serializable {
     private String title;
 
     @OneToMany(mappedBy = "section")
-    private Set<QuestionExam> questions;
+    private Set<QuestionExam> questions = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "EXAM_ID")
@@ -37,11 +39,10 @@ public class Section implements Serializable {
     public Section() {
     }
 
-    public Section(Integer position, String title, Set<QuestionExam> questions, Exam exam) {
+    public Section(Integer position, String title, Set<QuestionExam> questions) {
         this.position = position;
         this.title = title;
         this.questions = questions;
-        this.exam = exam;
     }
 
     public double getScoreSection(){
