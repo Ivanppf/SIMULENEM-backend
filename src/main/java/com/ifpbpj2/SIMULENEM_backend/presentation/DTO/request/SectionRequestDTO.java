@@ -9,9 +9,7 @@ public record SectionRequestDTO(
     @NotNull
     Integer position,
     String title,
-    Set<QuestionExamRequestDTO> questions,
-    @NotNull
-    UUID examUuid
+    Set<QuestionExamRequestDTO> questions
 ) {
 
 }
