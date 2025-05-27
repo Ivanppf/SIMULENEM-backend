@@ -36,16 +36,15 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     @GetMapping
-    public ResponseEntity<List<CategoryResponseDTO>> findById(
-            @RequestParam(value = "id", required = false) UUID id,
-            @RequestParam(value = "name", required = false) String name) {
+    public ResponseEntity<List<CategoryResponseDTO>> find(
+        @RequestParam(value = "name", required = false) String name) {
         Category category = new Category();
-        category.setId(id);
         category.setName(name);
         List<Category> categories = categoryService.find(category);
         return ResponseEntity.ok().body(categories.stream().map(CategoryResponseDTO::new).toList());
 
     }
+    
 
     @Override
     @PostMapping
@@ -69,6 +68,12 @@ public class CategoryControllerImpl implements CategoryController {
     public ResponseEntity<CategoryResponseDTO> deleteById(@PathVariable("id") UUID id) {
         categoryService.deleteById(id);
         return new ResponseEntity<>((HttpStatus.NO_CONTENT));
+    }
+
+    @Override
+    public ResponseEntity<CategoryResponseDTO> findById(UUID id) {
+        CategoryResponseDTO responseDTO = new CategoryResponseDTO(categoryService.findById(id));
+        return ResponseEntity.ok().body(responseDTO);
     }
 
 }
