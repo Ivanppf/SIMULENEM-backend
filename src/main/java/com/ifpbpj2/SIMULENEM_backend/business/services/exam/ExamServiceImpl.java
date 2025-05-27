@@ -9,8 +9,6 @@ import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.ExamRepository;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
-import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionExamResponseDTO;
-import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.SectionResponseDTO;
 
 @Service
 public class ExamServiceImpl implements ExamService {
@@ -25,7 +23,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public List<ExamResponseDTO> findAll() {
         return examRepository.findAll().stream()
-            .map(ExamResponseDTO::new).toList();
+            .map(e -> new ExamResponseDTO(e, null)).toList();
     }
 
     @Override
@@ -36,15 +34,16 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public ExamResponseDTO save(Exam exam) {
-        return new ExamResponseDTO(examRepository.save(exam));
+        return new ExamResponseDTO(examRepository.save(exam), null);
     }
 
     @Override
     public ExamResponseDTO update(UUID id, ExamRequestDTO examUpdate) {
         Exam exam = findById(id);
+        exam.setTitle(examUpdate.title());
         exam.setApplicationDate(examUpdate.applicationDate());
         exam.setResultPublished(examUpdate.resultPublished());
-        return new ExamResponseDTO(examRepository.save(exam));
+        return new ExamResponseDTO(examRepository.save(exam), null);
     }
 
     @Override
