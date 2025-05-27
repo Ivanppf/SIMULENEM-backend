@@ -3,6 +3,7 @@ package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.exam;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,9 @@ import com.ifpbpj2.SIMULENEM_backend.business.services.exam.ExamService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/exams")
@@ -37,8 +41,9 @@ public class ExamControllerImpl {
 
     @GetMapping("/{id}")
     public ResponseEntity<ExamResponseDTO> findById(@PathVariable("id") UUID id) {
-        ExamResponseDTO exam = new ExamResponseDTO(examService.findById(id));
-        return ResponseEntity.ok().body(exam);
+        Exam exam = examService.findById(id);
+        Link sectionLink = linkTo(methodOn(SectionController.class).findAll(id)).withRel("sections");
+        return ResponseEntity.ok().body(new ExamResponseDTO(exam, sectionLink));
     }
 
     @PostMapping
@@ -51,7 +56,8 @@ public class ExamControllerImpl {
     @PutMapping("/{id}")
     public ResponseEntity<ExamResponseDTO> update(@PathVariable("id") UUID id, @RequestBody ExamRequestDTO obj) {
         ExamResponseDTO updatedExam = examService.update(id, obj);
-        return ResponseEntity.ok().body(updatedExam);
+        Link sectionLink = linkTo(methodOn(SectionController.class).findAll(id)).withRel("sections");
+        return ResponseEntity.ok().body(updatedExam.withSections(sectionLink));
     }
 
     @DeleteMapping("/{id}")
