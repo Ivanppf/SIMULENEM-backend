@@ -37,30 +37,31 @@ public class SectionService {
     @Transactional
     public SectionResponseDTO save(UUID examUuid, SectionRequestDTO requestDTO){
         Exam exam = examService.findById(examUuid);
-        Set<QuestionExam> questionExams = fromQuestionExams(requestDTO.questions());
-        Section section = new Section(requestDTO.position(), requestDTO.title(), questionExams);
-        exam.getSections().add(section);
+        Section section = new Section(requestDTO.position(), requestDTO.title());
+        factoryQuestionExams(requestDTO.questionExams(), section);
+        exam.addSection(section);
         return fromSectionResponseDTO(sectionRepository.save(section));    
     }
     private SectionResponseDTO fromSectionResponseDTO(Section section){
-        List<QuestionExamResponseDTO> questionExamResponse = section.getQuestions()
+        List<QuestionExamResponseDTO> questionExamResponse = section.getQuestionExams()
             .stream().map(QuestionExamResponseDTO::new).toList();
         return new SectionResponseDTO(section, questionExamResponse);
     }
-    private Set<QuestionExam> fromQuestionExams(Set<QuestionExamRequestDTO> dtos){
+    private Set<QuestionExam> factoryQuestionExams(Set<QuestionExamRequestDTO> dtos, Section section){
         return dtos.stream()
             .map(q -> {
                 var question = questionService.findById(q.questionUuid());
-                return new QuestionExam(q, question);
+                QuestionExam questionExam = new QuestionExam(q, question);
+                section.addQuestionExams(questionExam);
+                return questionExam;
             }).collect(Collectors.toSet());
     }
-
 
     public SectionResponseDTO update(UUID uuidExam, UUID uuidSection, SectionRequestDTO requestDTO){
         Exam exam = examService.findById(uuidExam);
         Section section = findById(uuidSection);
-        Set<QuestionExam> questionExams = fromQuestionExams(requestDTO.questions());
-        Section sectionUpdate = new Section(requestDTO.position(), requestDTO.title(), questionExams);
+        Section sectionUpdate = new Section(requestDTO.position(), requestDTO.title());
+        factoryQuestionExams(requestDTO.questionExams(), section);
         sectionUpdate.setExam(exam);
         sectionUpdate.setId(section.getId());
         return fromSectionResponseDTO(sectionRepository.save(sectionUpdate));
@@ -71,9 +72,14 @@ public class SectionService {
             .orElseThrow(() -> new SectionNotFoundException(sectionUuid));
     }
 
-    public List<SectionResponseDTO> findAll(UUID examUuid){
+    public List<SectionResponseDTO> findSectionsByExamId(UUID examUuid){
         Exam exam = examService.findById(examUuid);
         return exam.getSections().stream()
             .map(this::fromSectionResponseDTO).toList();
+    }
+
+    public void deleteById(UUID sectionUuid){
+        Section section = findById(sectionUuid);
+        sectionRepository.delete(section);
     }
 }
