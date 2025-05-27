@@ -9,7 +9,7 @@ public record SectionRequestDTO(
     @NotNull
     Integer position,
     String title,
-    Set<QuestionExamRequestDTO> questions
+    Set<QuestionExamRequestDTO> questionExams
 ) {
 
 }
