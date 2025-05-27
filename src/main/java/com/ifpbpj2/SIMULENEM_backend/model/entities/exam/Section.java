@@ -29,8 +29,8 @@ public class Section implements Serializable {
 
     private String title;
 
-    @OneToMany(mappedBy = "section")
-    private Set<QuestionExam> questions = new HashSet<>();
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
+    private Set<QuestionExam> questionExams = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "EXAM_ID")
@@ -39,14 +39,18 @@ public class Section implements Serializable {
     public Section() {
     }
 
-    public Section(Integer position, String title, Set<QuestionExam> questions) {
+    public Section(Integer position, String title) {
         this.position = position;
         this.title = title;
-        this.questions = questions;
+    }
+
+    public void addQuestionExams(QuestionExam questionExam){
+        questionExam.setSection(this);
+        this.questionExams.add(questionExam);
     }
 
     public double getScoreSection(){
-        return questions.stream().mapToDouble((QuestionExam::getScoreQuestion)).sum();
+        return questionExams.stream().mapToDouble((QuestionExam::getScoreQuestion)).sum();
     }
 
     public UUID getId() {
@@ -68,11 +72,11 @@ public class Section implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public Set<QuestionExam> getQuestions() {
-        return questions;
+    public Set<QuestionExam> getQuestionExams() {
+        return questionExams;
     }
-    public void setQuestions(Set<QuestionExam> questions) {
-        this.questions = questions;
+    public void setQuestionExams(Set<QuestionExam> questions) {
+        this.questionExams = questions;
     }
     public Exam getExam() {
         return exam;

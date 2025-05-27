@@ -47,7 +47,7 @@ public class QuestionExam implements Serializable {
     
     public QuestionExam(QuestionExamRequestDTO obj, Question question) {
         this.position = obj.position();
-        this.scoreQuestion = getScoreQuestion();
+        this.scoreQuestion = obj.scoreQuestion();
         this.question = question;
     }
 
@@ -82,5 +82,31 @@ public class QuestionExam implements Serializable {
     public void setQuestion(Question question) {
         this.question = question;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((question == null) ? 0 : question.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        QuestionExam other = (QuestionExam) obj;
+        if (question == null) {
+            if (other.question != null)
+                return false;
+        } else if (!question.equals(other.question))
+            return false;
+        return true;
+    }
+
     
 }
