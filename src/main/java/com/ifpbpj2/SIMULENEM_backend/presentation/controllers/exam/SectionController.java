@@ -18,6 +18,8 @@ import com.ifpbpj2.SIMULENEM_backend.business.services.exam.SectionService;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.SectionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.SectionResponseDTO;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @RestController
 @RequestMapping(value = "exams/{examUuid}/sections")
 public class SectionController {

@@ -33,6 +33,7 @@ import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
 @RestController

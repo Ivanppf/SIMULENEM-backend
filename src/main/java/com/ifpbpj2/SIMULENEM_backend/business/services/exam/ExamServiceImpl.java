@@ -3,6 +3,10 @@ package com.ifpbpj2.SIMULENEM_backend.business.services.exam;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
@@ -21,9 +25,14 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public List<ExamResponseDTO> findAll() {
-        return examRepository.findAll().stream()
-            .map(e -> new ExamResponseDTO(e, null)).toList();
+    public Page<ExamResponseDTO> findAll(Pageable pageable, Exam examFilter) {
+        Example example = Example.of(examFilter,
+                ExampleMatcher.matching()
+                        .withIgnoreCase()
+                        .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
+
+        Page<Exam> exams = examRepository.findAll(example, pageable);
+        return exams.map(exam -> new ExamResponseDTO(exam, null));
     }
 
     @Override

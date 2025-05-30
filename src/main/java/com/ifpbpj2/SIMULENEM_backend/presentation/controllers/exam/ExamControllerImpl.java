@@ -3,6 +3,9 @@ package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.exam;
 import java.util.List;
 import java.util.UUID;
 
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpbpj2.SIMULENEM_backend.business.services.exam.ExamService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -34,9 +40,15 @@ public class ExamControllerImpl {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExamResponseDTO>> findAll() {
-        List<ExamResponseDTO> exams = examService.findAll();
+    public ResponseEntity<Page<ExamResponseDTO>> findAll(
+        @ParameterObject Pageable pageable,
+        @RequestParam(value = "title", required = false) String title) {
+
+            Exam examFilter = new Exam();
+            examFilter.setTitle(title);
+        Page<ExamResponseDTO> exams = examService.findAll(pageable, examFilter);
         return ResponseEntity.ok().body(exams);
+
     }
 
     @GetMapping("/{id}")
