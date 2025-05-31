@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.model.repositories;
+package com.ifpbpj2.SIMULENEM_backend.model.repositories.question;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     Optional<Category> findByName(String name);

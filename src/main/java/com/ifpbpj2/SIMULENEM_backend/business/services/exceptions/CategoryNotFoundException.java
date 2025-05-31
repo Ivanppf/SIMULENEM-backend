@@ -9,7 +9,7 @@ public class CategoryNotFoundException extends RuntimeException {
         super("Categoria com id " + id + " não encontrada");
     }
 
-    public CategoryNotFoundException(String mensage) {
-        super(mensage);
+    public CategoryNotFoundException(String menssage) {
+        super(menssage);
     }
 }

@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.presentation.controllers;
+package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.question;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +10,9 @@ import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseD
 
 
 public interface CategoryController {
-    ResponseEntity<List<CategoryResponseDTO>> findById(UUID id, String name);
+    ResponseEntity<List<CategoryResponseDTO>> find(String name);
+
+    ResponseEntity<CategoryResponseDTO> findById(UUID id);
 
     ResponseEntity<CategoryResponseDTO> save(CategoryRequestDTO obj);
 

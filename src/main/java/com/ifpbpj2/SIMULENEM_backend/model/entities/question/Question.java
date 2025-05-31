@@ -1,8 +1,7 @@
-package com.ifpbpj2.SIMULENEM_backend.model.entities;
+package com.ifpbpj2.SIMULENEM_backend.model.entities.question;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,6 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -38,7 +38,7 @@ public class Question implements Serializable {
     @Column(nullable = false)
     private QuestionType questionType;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, columnDefinition = "TEXT")
     private String title;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -57,12 +57,16 @@ public class Question implements Serializable {
 
     private LocalDateTime lastUsedDate;
 
-    @ManyToMany(mappedBy = "questions")
+    @ManyToMany
+    @Column(nullable = false)
+    @JoinTable(
+        name = "TB_CATEGORY_QUESTION",
+        joinColumns = @JoinColumn(name = "question_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private Set<Category> categories;
 
     public Question() {
-        this.alternatives = new HashSet<>();
-        this.categories = new HashSet<>();
     }
 
     public Question(QuestionType questionType, String title, Illustration illustration,
@@ -75,7 +79,6 @@ public class Question implements Serializable {
         this.categories = categories;
         this.difficulty = difficulty;
         this.expectedAnswer = expectedAnswer;
-        this.categories = new HashSet<>();
     }
 
     public Question(UUID id, QuestionType questionType, String title, Set<Category> categories, Difficulty difficulty,
@@ -86,7 +89,6 @@ public class Question implements Serializable {
         this.categories = categories;
         this.difficulty = difficulty;
         this.lastUsedDate = lastUsedDate;
-        this.categories = new HashSet<>();
     }
 
     public Question(QuestionRequestDTO obj) {
@@ -98,7 +100,6 @@ public class Question implements Serializable {
         this.alternatives = obj.alternatives().stream().map(Alternative::new).collect(Collectors.toSet());
         this.difficulty = obj.difficulty();
         this.expectedAnswer = obj.expectedAnswer();
-        this.categories = new HashSet<>();
     }
 
     public UUID getId() {
@@ -170,6 +171,7 @@ public class Question implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
     }
 
@@ -186,6 +188,11 @@ public class Question implements Serializable {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
             return false;
         return true;
     }

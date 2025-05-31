@@ -5,9 +5,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Alternative;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Illustration;
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Question;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Alternative;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Illustration;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 

@@ -2,7 +2,7 @@ package com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response;
 
 import java.util.UUID;
 
-import com.ifpbpj2.SIMULENEM_backend.model.entities.Category;
+import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Origin;
 
 public record CategoryResponseDTO(
