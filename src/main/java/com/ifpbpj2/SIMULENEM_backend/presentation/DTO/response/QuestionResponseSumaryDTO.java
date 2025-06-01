@@ -14,7 +14,7 @@ public record QuestionResponseSumaryDTO(
         String title,
         Illustration illustration,
         Set<Alternative> alternatives,
-        String expectedAnswer
+        Character expectedAnswer
 ) {
     public QuestionResponseSumaryDTO(Question question) {
         this(question.getId(), question.getQuestionType(), question.getTitle(), 

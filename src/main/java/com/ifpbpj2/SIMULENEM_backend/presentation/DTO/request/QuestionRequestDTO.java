@@ -15,6 +15,6 @@ public record QuestionRequestDTO(
                 @NotNull(message = "Por favor informe as alternativas") Set<AlternativesRequestDTO> alternatives,
                 @NotNull(message = "Por favor informe ao menos uma categoria") Set<String> categories,
                 @NotNull(message = "Por favor informe a dificuldade da questão") Difficulty difficulty,
-                @NotBlank(message = "Por favor informe a resposta esperada") String expectedAnswer) {
+                @NotBlank(message = "Por favor informe a letra da resposta esperada") Character expectedAnswer) {
 
 }

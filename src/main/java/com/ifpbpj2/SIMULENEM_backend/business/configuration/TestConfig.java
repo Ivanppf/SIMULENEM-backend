@@ -68,7 +68,7 @@ public class TestConfig implements CommandLineRunner {
                 alternativasQ1,
                 Set.of(matematica),
                 Difficulty.FACIL,
-                "3,14");
+                'D');
 
         Question q2 = new Question(
                 QuestionType.FECHADA,
@@ -77,7 +77,7 @@ public class TestConfig implements CommandLineRunner {
                 alternativasQ2,
                 Set.of(ciencias),
                 Difficulty.FACIL,
-                "Verdadeiro");
+                'A');
 
         Question q3 = new Question(
                 QuestionType.FECHADA,
@@ -86,7 +86,7 @@ public class TestConfig implements CommandLineRunner {
                 alternativasQ3,
                 Set.of(ciencias, matematica),
                 Difficulty.MEDIO,
-                "Todo corpo permanece em repouso ou em movimento retilíneo uniforme se nenhuma força atuar sobre ele");
+                'B');
 
         questionRepository.saveAll(Arrays.asList(q1,q2,q3));
 

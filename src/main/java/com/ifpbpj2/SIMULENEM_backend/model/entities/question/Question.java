@@ -53,7 +53,7 @@ public class Question implements Serializable {
     private Difficulty difficulty;
 
     @Column(nullable = false)
-    private String expectedAnswer;
+    private Character expectedAnswer;
 
     private LocalDateTime lastUsedDate;
 
@@ -71,7 +71,7 @@ public class Question implements Serializable {
 
     public Question(QuestionType questionType, String title, Illustration illustration,
             Set<Alternative> alternatives, Set<Category> categories, Difficulty difficulty,
-            String expectedAnswer) {
+            Character expectedAnswer) {
         this.questionType = questionType;
         this.title = title;
         this.illustration = illustration;
@@ -150,11 +150,11 @@ public class Question implements Serializable {
         this.difficulty = difficulty;
     }
 
-    public String getExpectedAnswer() {
+    public Character getExpectedAnswer() {
         return expectedAnswer;
     }
 
-    public void setExpectedAnswer(String expectedAnswer) {
+    public void setExpectedAnswer(Character expectedAnswer) {
         this.expectedAnswer = expectedAnswer;
     }
 

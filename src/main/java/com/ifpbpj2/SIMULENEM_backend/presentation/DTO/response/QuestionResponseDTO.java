@@ -19,7 +19,7 @@ public record QuestionResponseDTO(
         Set<Alternative> alternatives,
         Set<CategoryResponseDTO> categories,
         Difficulty difficulty,
-        String expectedAnswer,
+        Character expectedAnswer,
         LocalDateTime lastUsedDate) {
     public QuestionResponseDTO(Question question) {
         this(question.getId(), question.getQuestionType(), question.getTitle(), question.getIllustration(),
