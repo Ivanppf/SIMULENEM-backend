@@ -1,7 +1,10 @@
 package com.ifpbpj2.SIMULENEM_backend.business.services.exam;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -33,6 +36,12 @@ public class ExamServiceImpl implements ExamService {
 
         Page<Exam> exams = examRepository.findAll(example, pageable);
         return exams.map(exam -> new ExamResponseDTO(exam, null));
+    }
+
+
+    @Override
+    public Set<Exam> findAllById(Set<UUID> ids) {
+        return examRepository.findAllById(ids).stream().collect(Collectors.toSet());
     }
 
     @Override

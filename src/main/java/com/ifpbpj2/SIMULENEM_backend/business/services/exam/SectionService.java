@@ -12,7 +12,7 @@ import com.ifpbpj2.SIMULENEM_backend.business.services.question.QuestionService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.QuestionExam;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Section;
-import com.ifpbpj2.SIMULENEM_backend.model.repositories.SectionRepository;
+import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.SectionRepository;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionExamRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.SectionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionExamResponseDTO;

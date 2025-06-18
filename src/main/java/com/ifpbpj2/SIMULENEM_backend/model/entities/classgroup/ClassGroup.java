@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.model.entities;
+package com.ifpbpj2.SIMULENEM_backend.model.entities.classgroup;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ClassGroupRequestDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +31,13 @@ public class ClassGroup implements Serializable {
     @OneToMany
     @JoinColumn(name = "exam_id")
     private Set<Exam> exams;
+
+    public ClassGroup(ClassGroupRequestDTO dto) {
+        this.gradeLevel = dto.gradeLevel();
+        this.identifier = dto.identifier();
+        this.room = dto.room();
+        this.block = dto.block();
+    }
 
     public ClassGroup(String gradeLevel, char identifier, int room, int block) {
         this.gradeLevel = gradeLevel;
@@ -61,6 +69,12 @@ public class ClassGroup implements Serializable {
     }
     public void setBlock(int building) {
         this.block = building;
+    }
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    public void setExams(Set<Exam> exams) {
+        this.exams = exams;
     }
 
     

@@ -1,6 +1,7 @@
 package com.ifpbpj2.SIMULENEM_backend.business.services.exam;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -15,6 +16,8 @@ public interface ExamService {
     Page<ExamResponseDTO> findAll(Pageable pageable, Exam examFilter);
 
     Exam findById(UUID id);
+
+    Set<Exam> findAllById(Set<UUID> ids);
 
     ExamResponseDTO save(Exam exam);
 

@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.model.repositories;
+package com.ifpbpj2.SIMULENEM_backend.model.repositories.exam;
 
 import java.util.UUID;
 
