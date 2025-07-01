@@ -8,12 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
+import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.projections.QuestionProjection;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 
 public interface QuestionService {
 
-    Page<Question> find(Pageable pageable, Question question);
+    Page<QuestionProjection> findAll(Pageable pageable);
 
     Question findById(UUID uuid);
 
