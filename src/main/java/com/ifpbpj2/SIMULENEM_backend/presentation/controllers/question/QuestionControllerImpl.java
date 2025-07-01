@@ -1,14 +1,11 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.question;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +16,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.ifpbpj2.SIMULENEM_backend.business.services.question.CategoryService;
 import com.ifpbpj2.SIMULENEM_backend.business.services.question.QuestionService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
-import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
-import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
+import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.projections.QuestionProjection;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableMapper;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
 @RestController
@@ -42,32 +37,15 @@ import jakarta.validation.Valid;
 public class QuestionControllerImpl implements QuestionController {
 
     private final QuestionService questionService;
-    private final CategoryService categoryService;
 
-    public QuestionControllerImpl(QuestionService questionService, CategoryService categoryService) {
+    public QuestionControllerImpl(QuestionService questionService) {
         this.questionService = questionService;
-        this.categoryService = categoryService;
     }
 
-    @Override
-    @GetMapping
-    public ResponseEntity<Page<QuestionResponseDTO>> find(
-            @ParameterObject Pageable pageable,
-            @RequestParam(value = "id", required = false) UUID id,
-            @RequestParam(value = "questionType", required = false) QuestionType questionType,
-            @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "categories", required = false) Set<String> categoryNames,
-            @RequestParam(value = "difficulty", required = false) Difficulty difficulty,
-            @RequestParam(value = "lastUsedDate", required = false) LocalDateTime lastUsedDate) {
-
-        Set<Category> categories = null;
-        if (categoryNames != null) {
-            categories = categoryService.findByNameIn(categoryNames);
-        }
-        Question questionFilter = new Question(id, questionType, title, categories, difficulty, lastUsedDate);
-        Page<Question> questions = questionService.find(pageable, questionFilter);
-        return ResponseEntity.ok().body(questions.map(QuestionResponseDTO::new));
-
+    @GetMapping()
+    public ResponseEntity<PageableDTO<QuestionProjection>> findAll(Pageable pageable) {
+        var questions = questionService.findAll(pageable);
+        return ResponseEntity.ok(PageableMapper.toDTO(questions));
     }
 
     @Override
@@ -81,7 +59,7 @@ public class QuestionControllerImpl implements QuestionController {
     @PostMapping
     public ResponseEntity<QuestionResponseDTO> save(@RequestBody @Valid QuestionRequestDTO obj) {
         Set<CategoryResponseDTO> categories = obj.categories().stream().map(categoryName -> {
-              return new CategoryResponseDTO(UUID.fromString(categoryName), null, null);
+            return new CategoryResponseDTO(UUID.fromString(categoryName), null, null);
         }).collect(Collectors.toSet());
         Question question = new Question(obj);
         question = questionService.save(question, categories);
