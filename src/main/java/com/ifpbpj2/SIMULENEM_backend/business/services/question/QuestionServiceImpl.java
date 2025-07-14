@@ -10,12 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ifpbpj2.SIMULENEM_backend.business.services.question.specifications.QuestionSpecifications;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.QuestionRepository;
-import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.projections.QuestionProjection;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.queryParameters.QuestionQueryParametersDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -29,8 +31,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public Page<QuestionProjection> findAll(Pageable pageable) {
-        return questionRepository.findAllPageable(pageable);
+    public Page<QuestionResponseDTO> findAll(Pageable pageable, QuestionQueryParametersDTO queryParametersDTO) {
+        var spec = QuestionSpecifications.withFilters(queryParametersDTO);
+        Page<QuestionResponseDTO> page = questionRepository.findAll(spec, pageable)
+                .map(q -> new QuestionResponseDTO(q));
+        return page;
     }
 
     @Override
