@@ -22,9 +22,9 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.ifpbpj2.SIMULENEM_backend.business.services.question.QuestionService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
-import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.projections.QuestionProjection;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableMapper;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.queryParameters.QuestionQueryParametersDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
@@ -42,9 +42,10 @@ public class QuestionControllerImpl implements QuestionController {
         this.questionService = questionService;
     }
 
-    @GetMapping()
-    public ResponseEntity<PageableDTO<QuestionProjection>> findAll(Pageable pageable) {
-        var questions = questionService.findAll(pageable);
+    @GetMapping
+    public ResponseEntity<PageableDTO<QuestionResponseDTO>> findAll(
+            QuestionQueryParametersDTO queryParametersDTO, Pageable pageable) {
+        var questions = questionService.findAll(pageable, queryParametersDTO);
         return ResponseEntity.ok(PageableMapper.toDTO(questions));
     }
 
