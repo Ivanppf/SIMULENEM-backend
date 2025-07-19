@@ -1,5 +1,6 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.question;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +23,8 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.ifpbpj2.SIMULENEM_backend.business.services.question.QuestionService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
+import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
+import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableMapper;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.queryParameters.QuestionQueryParametersDTO;
@@ -42,9 +45,12 @@ public class QuestionControllerImpl implements QuestionController {
         this.questionService = questionService;
     }
 
-    @GetMapping
-    public ResponseEntity<PageableDTO<QuestionResponseDTO>> findAll(
-            QuestionQueryParametersDTO queryParametersDTO, Pageable pageable) {
+    @Override
+    public ResponseEntity<PageableDTO<QuestionResponseDTO>> findAll(QuestionType questionType, String title,
+            Set<String> categoryNames, Difficulty difficulty, LocalDateTime lastUsedDate, Pageable pageable) {
+        var queryParametersDTO = new QuestionQueryParametersDTO(questionType, title, categoryNames, difficulty,
+                lastUsedDate);
+
         var questions = questionService.findAll(pageable, queryParametersDTO);
         return ResponseEntity.ok(PageableMapper.toDTO(questions));
     }
