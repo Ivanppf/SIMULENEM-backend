@@ -2,26 +2,25 @@ package com.ifpbpj2.SIMULENEM_backend.presentation.DTO.queryParameters;
 
 import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 
 public class QuestionQueryParametersDTO {
 
-        private UUID id;
         private QuestionType questionType;
         private String title;
         private Set<String> categoryNames;
         private Difficulty difficulty;
         private LocalDateTime lastUsedDate;
 
-        public UUID getId() {
-                return id;
-        }
-
-        public void setId(UUID id) {
-                this.id = id;
+        public QuestionQueryParametersDTO(QuestionType questionType, String title, Set<String> categoryNames,
+                        Difficulty difficulty, LocalDateTime lastUsedDate) {
+                this.questionType = questionType;
+                this.title = title;
+                this.categoryNames = categoryNames;
+                this.difficulty = difficulty;
+                this.lastUsedDate = lastUsedDate;
         }
 
         public QuestionType getQuestionType() {
