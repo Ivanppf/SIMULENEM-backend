@@ -16,10 +16,6 @@ public class QuestionSpecifications {
                 return (root, query, cb) -> {
                         List<Predicate> predicates = new ArrayList<>();
 
-                        if (params.getId() != null) {
-                                predicates.add(cb.equal(root.get("id"), params.getId()));
-                        }
-
                         if (params.getTitle() != null && !params.getTitle().isBlank()) {
                                 predicates.add(cb.like(cb.lower(root.get("text")),
                                                 "%" + params.getTitle().toLowerCase() + "%"));
