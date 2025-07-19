@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend;
+package com.ifpbpj2.SIMULENEM_backend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
