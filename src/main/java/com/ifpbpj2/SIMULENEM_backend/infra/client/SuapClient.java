@@ -19,11 +19,11 @@ public interface SuapClient {
         ResponseEntity<SuapAccessDTO> login(@RequestBody LoginDTO loginRequest);
 
         @GetMapping("/api/recursos-humanos/servidores/v1/")
-        ResponseEntity<UserPageableSuapDTO> getAllEmployees(@RequestHeader("Authorization") String token,
+        ResponseEntity<UserPageableSuapDTO> findEmployee(@RequestHeader("Authorization") String token,
                         @RequestParam("search") String username);
 
         @GetMapping("/api/ensino/alunos/v1/")
-        ResponseEntity<String> isStudent(@RequestHeader("Authorization") String token,
+        ResponseEntity<UserPageableSuapDTO> findStudent(@RequestHeader("Authorization") String token,
                         @RequestParam("search") String username);
 
 }
