@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.jwt;
+package com.ifpbpj2.SIMULENEM_backend.infra.jwt;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

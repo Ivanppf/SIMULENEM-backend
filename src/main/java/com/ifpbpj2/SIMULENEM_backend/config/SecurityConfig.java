@@ -14,8 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.ifpbpj2.SIMULENEM_backend.jwt.AuthorizationFilter;
-import com.ifpbpj2.SIMULENEM_backend.jwt.EntryPointAuthentication;
+import com.ifpbpj2.SIMULENEM_backend.infra.jwt.AuthorizationFilter;
+import com.ifpbpj2.SIMULENEM_backend.infra.jwt.EntryPointAuthentication;
 
 @Configuration
 @EnableWebMvc

@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.jwt;
+package com.ifpbpj2.SIMULENEM_backend.infra.jwt;
 
 import java.time.ZoneId;
 import java.util.Date;

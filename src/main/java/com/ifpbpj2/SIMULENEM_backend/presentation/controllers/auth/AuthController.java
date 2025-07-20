@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifpbpj2.SIMULENEM_backend.jwt.UserDetailsJwtService;
+import com.ifpbpj2.SIMULENEM_backend.infra.jwt.UserDetailsJwtService;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.LoginDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.TokenDTO;
 
