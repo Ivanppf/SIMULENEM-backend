@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.business.services.exceptions;
+package com.ifpbpj2.SIMULENEM_backend.presentation.handlerException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.ifpbpj2.SIMULENEM_backend.exception.EntityInUseException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -36,6 +38,14 @@ public class GlobalExceptionHandler {
                         HttpServletRequest request) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON)
                                 .body(new ErrorDetails(request, HttpStatus.BAD_REQUEST,
+                                                ex.getMessage()));
+        }
+
+        @ExceptionHandler(EntityInUseException.class)
+        public ResponseEntity<ErrorDetails> handleEntityInUseException(EntityInUseException ex,
+                        HttpServletRequest request) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON)
+                                .body(new ErrorDetails(request, HttpStatus.CONFLICT,
                                                 ex.getMessage()));
         }
 

@@ -1,4 +1,4 @@
-package com.ifpbpj2.SIMULENEM_backend.business.services.exceptions;
+package com.ifpbpj2.SIMULENEM_backend.presentation.handlerException;
 
 import java.util.HashMap;
 import java.util.Map;
