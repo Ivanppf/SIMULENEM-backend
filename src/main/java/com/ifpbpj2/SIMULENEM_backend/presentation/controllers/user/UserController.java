@@ -15,7 +15,7 @@ import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.user.UserResponseDTO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/users")
 public class UserController {
 
         private final UserService userService;

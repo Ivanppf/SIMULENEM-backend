@@ -5,7 +5,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpbpj2.SIMULENEM_backend.infra.jwt.UserDetailsJwtService;
@@ -15,7 +14,6 @@ import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.TokenDTO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
 public class AuthController {
 
         private final UserDetailsJwtService userDetailsJwtService;
