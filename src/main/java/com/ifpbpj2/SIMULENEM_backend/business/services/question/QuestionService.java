@@ -8,12 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Question;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.queryParameters.QuestionQueryParametersDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
 
 public interface QuestionService {
 
-    Page<Question> find(Pageable pageable, Question question);
+    Page<QuestionResponseDTO> findAll(Pageable pageable, QuestionQueryParametersDTO queryParametersDTO);
 
     Question findById(UUID uuid);
 

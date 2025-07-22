@@ -18,9 +18,9 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class ClassGroup implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String gradeLevel;
@@ -46,36 +46,45 @@ public class ClassGroup implements Serializable {
         this.block = block;
         this.exams = new HashSet<>();
     }
+
     public String getGradeLevel() {
         return gradeLevel;
     }
+
     public void setGradeLevel(String gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
+
     public char getIdentifier() {
         return identifier;
     }
+
     public void setIdentifier(char identifier) {
         this.identifier = identifier;
     }
+
     public int getRoom() {
         return room;
     }
+
     public void setRoom(int room) {
         this.room = room;
     }
+
     public int getBlock() {
         return block;
     }
+
     public void setBlock(int building) {
         this.block = building;
     }
+
     public void setId(UUID id) {
         this.id = id;
     }
+
     public void setExams(Set<Exam> exams) {
         this.exams = exams;
     }
 
-    
 }

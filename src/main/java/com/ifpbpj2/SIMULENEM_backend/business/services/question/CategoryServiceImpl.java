@@ -9,8 +9,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.CategoryNotFoundException;
-import com.ifpbpj2.SIMULENEM_backend.business.services.exceptions.EntityInUseException;
+import com.ifpbpj2.SIMULENEM_backend.exception.CategoryNotFoundException;
+import com.ifpbpj2.SIMULENEM_backend.exception.EntityInUseException;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.question.CategoryRepository;
 
@@ -25,17 +25,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category findByName(String name) {
         return categoryRepository.findByName(name)
-                .orElseThrow(() -> new CategoryNotFoundException("Categoria com o nome " + name + " não foi encontrada" ));
+                .orElseThrow(
+                        () -> new CategoryNotFoundException("Categoria com o nome " + name + " não foi encontrada"));
     }
 
     @Override
     public List<Category> find(Category categoryFilter) {
-        Example example = Example.of(categoryFilter,
+        var example = Example.of(categoryFilter,
                 ExampleMatcher.matching()
                         .withIgnoreCase()
                         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
         return categoryRepository.findAll(example);
-
     }
 
     @Override

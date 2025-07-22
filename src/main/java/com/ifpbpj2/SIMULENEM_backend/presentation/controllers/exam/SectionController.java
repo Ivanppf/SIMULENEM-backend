@@ -18,12 +18,10 @@ import com.ifpbpj2.SIMULENEM_backend.business.services.exam.SectionService;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.SectionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.SectionResponseDTO;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 @RestController
 @RequestMapping(value = "exams/{examUuid}/sections")
 public class SectionController {
-    
+
     private final SectionService sectionService;
 
     public SectionController(SectionService sectionService) {
@@ -32,30 +30,29 @@ public class SectionController {
 
     @PostMapping
     public ResponseEntity<SectionResponseDTO> save(
-        @PathVariable(required = true) UUID examUuid,
-        @RequestBody SectionRequestDTO requestDTO
-        ){
-        SectionResponseDTO responseDTO = sectionService.save(examUuid,requestDTO);
+            @PathVariable(required = true) UUID examUuid,
+            @RequestBody SectionRequestDTO requestDTO) {
+        SectionResponseDTO responseDTO = sectionService.save(examUuid, requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @PutMapping(value = "/{sectionUuid}")
     public ResponseEntity<SectionResponseDTO> update(
-        @PathVariable UUID examUuid,
-        @PathVariable UUID sectionUuid,
-        @RequestBody SectionRequestDTO requestDTO){
+            @PathVariable UUID examUuid,
+            @PathVariable UUID sectionUuid,
+            @RequestBody SectionRequestDTO requestDTO) {
         SectionResponseDTO responseDTO = sectionService.update(examUuid, sectionUuid, requestDTO);
         return ResponseEntity.ok().body(responseDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<SectionResponseDTO>> findAll(@PathVariable UUID examUuid){
+    public ResponseEntity<List<SectionResponseDTO>> findAll(@PathVariable UUID examUuid) {
         List<SectionResponseDTO> responseDTOs = sectionService.findSectionsByExamId(examUuid);
         return ResponseEntity.ok().body(responseDTOs);
     }
 
     @DeleteMapping(value = "{sectionUuid}")
-    public ResponseEntity<Void> deleteById(@PathVariable UUID sectionUuid){
+    public ResponseEntity<Void> deleteById(@PathVariable UUID sectionUuid) {
         sectionService.deleteById(sectionUuid);
         return ResponseEntity.noContent().build();
     }

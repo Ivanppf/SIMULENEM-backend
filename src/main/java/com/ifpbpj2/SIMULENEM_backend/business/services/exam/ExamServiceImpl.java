@@ -1,19 +1,17 @@
 package com.ifpbpj2.SIMULENEM_backend.business.services.exam;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.ExamRepository;
+import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.projections.ExamProjection;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
 
@@ -27,17 +25,10 @@ public class ExamServiceImpl implements ExamService {
 
     }
 
-    @Override
-    public Page<ExamResponseDTO> findAll(Pageable pageable, Exam examFilter) {
-        Example example = Example.of(examFilter,
-                ExampleMatcher.matching()
-                        .withIgnoreCase()
-                        .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
-
-        Page<Exam> exams = examRepository.findAll(example, pageable);
-        return exams.map(exam -> new ExamResponseDTO(exam, null));
+    @Transactional(readOnly = true)
+    public Page<ExamProjection> findAll(Pageable pageable) {
+        return examRepository.findAllPageable(pageable);
     }
-
 
     @Override
     public Set<Exam> findAllById(Set<UUID> ids) {
@@ -52,7 +43,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public ExamResponseDTO save(Exam exam) {
-        return new ExamResponseDTO(examRepository.save(exam), null);
+        return new ExamResponseDTO(examRepository.save(exam));
     }
 
     @Override
@@ -61,7 +52,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setTitle(examUpdate.title());
         exam.setApplicationDate(examUpdate.applicationDate());
         exam.setResultPublished(examUpdate.resultPublished());
-        return new ExamResponseDTO(examRepository.save(exam), null);
+        return new ExamResponseDTO(examRepository.save(exam));
     }
 
     @Override

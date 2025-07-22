@@ -1,12 +1,8 @@
 package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.exam;
 
-import java.util.List;
 import java.util.UUID;
 
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,18 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpbpj2.SIMULENEM_backend.business.services.exam.ExamService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
+import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.projections.ExamProjection;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableMapper;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/exams")
@@ -40,22 +33,15 @@ public class ExamControllerImpl {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ExamResponseDTO>> findAll(
-        @ParameterObject Pageable pageable,
-        @RequestParam(value = "title", required = false) String title) {
-
-            Exam examFilter = new Exam();
-            examFilter.setTitle(title);
-        Page<ExamResponseDTO> exams = examService.findAll(pageable, examFilter);
-        return ResponseEntity.ok().body(exams);
-
+    public ResponseEntity<PageableDTO<ExamProjection>> findAll(Pageable pageable) {
+        var exams = examService.findAll(pageable);
+        return ResponseEntity.ok().body(PageableMapper.toDTO(exams));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ExamResponseDTO> findById(@PathVariable("id") UUID id) {
         Exam exam = examService.findById(id);
-        Link sectionLink = linkTo(methodOn(SectionController.class).findAll(id)).withRel("sections");
-        return ResponseEntity.ok().body(new ExamResponseDTO(exam, sectionLink));
+        return ResponseEntity.ok().body(new ExamResponseDTO(exam));
     }
 
     @PostMapping
@@ -68,8 +54,7 @@ public class ExamControllerImpl {
     @PutMapping("/{id}")
     public ResponseEntity<ExamResponseDTO> update(@PathVariable("id") UUID id, @RequestBody ExamRequestDTO obj) {
         ExamResponseDTO updatedExam = examService.update(id, obj);
-        Link sectionLink = linkTo(methodOn(SectionController.class).findAll(id)).withRel("sections");
-        return ResponseEntity.ok().body(updatedExam.withSections(sectionLink));
+        return ResponseEntity.ok().body(updatedExam);
     }
 
     @DeleteMapping("/{id}")

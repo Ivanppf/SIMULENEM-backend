@@ -21,7 +21,6 @@ import com.ifpbpj2.SIMULENEM_backend.model.entities.question.Category;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.CategoryRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
 @RestController
@@ -38,14 +37,13 @@ public class CategoryControllerImpl implements CategoryController {
     @Override
     @GetMapping
     public ResponseEntity<List<CategoryResponseDTO>> find(
-        @RequestParam(value = "name", required = false) String name) {
+            @RequestParam(value = "name", required = false) String name) {
         Category category = new Category();
         category.setName(name);
         List<Category> categories = categoryService.find(category);
         return ResponseEntity.ok().body(categories.stream().map(CategoryResponseDTO::new).toList());
 
     }
-    
 
     @Override
     @PostMapping
