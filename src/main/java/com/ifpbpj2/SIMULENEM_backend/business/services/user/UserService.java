@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ifpbpj2.SIMULENEM_backend.exception.EntityInUseException;
 import com.ifpbpj2.SIMULENEM_backend.exception.SuapUserNotFoundException;
 import com.ifpbpj2.SIMULENEM_backend.infra.client.SuapClient;
+import com.ifpbpj2.SIMULENEM_backend.infra.jwt.JwtUtils;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.user.User;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.user.User.Role;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.user.UserRepository;
