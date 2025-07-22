@@ -43,7 +43,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public ExamResponseDTO save(Exam exam) {
-        return new ExamResponseDTO(examRepository.save(exam), null);
+        return new ExamResponseDTO(examRepository.save(exam));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setTitle(examUpdate.title());
         exam.setApplicationDate(examUpdate.applicationDate());
         exam.setResultPublished(examUpdate.resultPublished());
-        return new ExamResponseDTO(examRepository.save(exam), null);
+        return new ExamResponseDTO(examRepository.save(exam));
     }
 
     @Override
