@@ -35,7 +35,8 @@ public class UserService {
                         var loginResponse = suapClient.login(new LoginDTO(user.getRegistration(), user.getPassword()));
                         var suapToken = loginResponse.getBody();
 
-                        validateUserExists(user.getRole(), suapToken.access(), user.getRegistration());
+                        validateUserExists(user.getRole(), JwtUtils.JWT_BEARER + suapToken.access(),
+                                        user.getRegistration());
 
                         var encodedPassword = passwordEncoder.encode(user.getPassword());
                         user.setPassword(encodedPassword);
