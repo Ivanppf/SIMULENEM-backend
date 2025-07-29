@@ -27,7 +27,7 @@ import com.ifpbpj2.SIMULENEM_backend.model.enums.Difficulty;
 import com.ifpbpj2.SIMULENEM_backend.model.enums.QuestionType;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableMapper;
-import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.queryParameters.QuestionQueryParametersDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.queryParameters.QuestionQueryParamsDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.QuestionRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.CategoryResponseDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.QuestionResponseDTO;
@@ -46,9 +46,16 @@ public class QuestionControllerImpl implements QuestionController {
     }
 
     @Override
-    public ResponseEntity<PageableDTO<QuestionResponseDTO>> findAll(QuestionType questionType, String title,
-            Set<String> categoryNames, Difficulty difficulty, LocalDateTime lastUsedDate, Pageable pageable) {
-        var queryParametersDTO = new QuestionQueryParametersDTO(questionType, title, categoryNames, difficulty,
+    @GetMapping
+    public ResponseEntity<PageableDTO<QuestionResponseDTO>> findAll(
+            QuestionType questionType,
+            String title,
+            Set<String> categoryNames,
+            Difficulty difficulty,
+            LocalDateTime lastUsedDate,
+            Pageable pageable) {
+
+        var queryParametersDTO = new QuestionQueryParamsDTO(questionType, title, categoryNames, difficulty,
                 lastUsedDate);
 
         var questions = questionService.findAll(pageable, queryParametersDTO);
