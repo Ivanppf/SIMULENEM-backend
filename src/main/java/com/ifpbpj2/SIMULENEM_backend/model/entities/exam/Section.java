@@ -49,6 +49,9 @@ public class Section implements Serializable {
     }
 
     public double getScoreSection() {
+        if (questionExams == null) {
+            return Double.valueOf(0);
+        }
         return questionExams.stream().mapToDouble((QuestionExam::getScoreQuestion)).sum();
     }
 
