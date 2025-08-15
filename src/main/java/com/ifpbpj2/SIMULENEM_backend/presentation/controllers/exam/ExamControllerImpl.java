@@ -3,7 +3,9 @@ package com.ifpbpj2.SIMULENEM_backend.presentation.controllers.exam;
 import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +63,14 @@ public class ExamControllerImpl {
     public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id) {
         examService.deleteById(id);
         return new ResponseEntity<>((HttpStatus.NO_CONTENT));
+    }
+
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> generatePdf(@PathVariable UUID id) {
+        var pdf = examService.generatePdf(id);
+        var headerValue = String.format("inline; filename=%s.pdf", id);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                .contentType(MediaType.APPLICATION_PDF).body(pdf);
     }
 
 }
