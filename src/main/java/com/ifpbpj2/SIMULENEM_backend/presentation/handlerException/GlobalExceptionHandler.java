@@ -3,6 +3,7 @@ package com.ifpbpj2.SIMULENEM_backend.presentation.handlerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -47,6 +48,15 @@ public class GlobalExceptionHandler {
                 return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON)
                                 .body(new ErrorDetails(request, HttpStatus.CONFLICT,
                                                 ex.getMessage()));
+        }
+        @ExceptionHandler(AccessDeniedException.class)
+        public ResponseEntity<ErrorDetails> accessDeniedException(AccessDeniedException exception,
+                                                                  HttpServletRequest request) {
+                return ResponseEntity
+                        .status(HttpStatus.FORBIDDEN)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(new ErrorDetails(request, HttpStatus.FORBIDDEN,
+                                exception.getMessage()));
         }
 
 }

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 public record SectionRequestDTO(
         @NotNull Integer position,
         String title,
+        String titleAbbreviation,
         Set<QuestionExamRequestDTO> questionExams) {
 
 }

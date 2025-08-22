@@ -1,6 +1,7 @@
 package com.ifpbpj2.SIMULENEM_backend.model.entities.exam;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,6 +57,13 @@ public class Exam implements Serializable {
     public void addSection(Section section) {
         section.setExam(this);
         sections.add(section);
+    }
+
+    public int getNumberOfQuestions() {
+        if (sections == null) {
+            return 0;
+        }
+        return sections.stream().mapToInt(section -> section.getQuestionExams().size()).sum();
     }
 
     public Double getTotalScore() {

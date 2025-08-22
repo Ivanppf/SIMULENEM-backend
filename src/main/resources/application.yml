@@ -14,3 +14,10 @@ spring:
 server:
   servlet:
     context-path: /api/v1/
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /docs.html
+    operations-sorter: group

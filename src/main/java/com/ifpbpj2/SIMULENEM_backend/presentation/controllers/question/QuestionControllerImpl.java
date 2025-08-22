@@ -46,6 +46,7 @@ public class QuestionControllerImpl implements QuestionController {
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<PageableDTO<QuestionResponseDTO>> findAll(QuestionType questionType, String title,
             Set<String> categoryNames, Difficulty difficulty, LocalDateTime lastUsedDate, Pageable pageable) {
         var queryParametersDTO = new QuestionQueryParametersDTO(questionType, title, categoryNames, difficulty,
