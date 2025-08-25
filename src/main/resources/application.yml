@@ -19,6 +19,13 @@ server:
   servlet:
     context-path: /api/v1/
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /docs.html
+    operations-sorter: group
+
 cloud:
   aws:
     s3:
@@ -31,4 +38,3 @@ cloud:
       static: us-east-1
     stack:
       auto: false
-

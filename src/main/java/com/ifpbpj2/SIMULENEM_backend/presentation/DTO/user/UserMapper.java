@@ -14,7 +14,8 @@ public class UserMapper {
                 var user = new User();
 
                 BeanUtils.copyProperties(request, user);
-                user.setRole(Role.valueOf(request.role()));
+                var role = String.format("ROLE_%s", request.role());
+                user.setRole(Role.valueOf(role));
 
                 return user;
         }

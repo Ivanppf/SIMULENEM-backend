@@ -7,14 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ifpbpj2.SIMULENEM_backend.business.services.exam.ExamService;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
@@ -44,6 +37,17 @@ public class ExamControllerImpl {
     public ResponseEntity<ExamResponseDTO> findById(@PathVariable("id") UUID id) {
         Exam exam = examService.findById(id);
         return ResponseEntity.ok().body(new ExamResponseDTO(exam));
+    }
+
+    @GetMapping("/{id}/answer-sheet")
+    public ResponseEntity<Byte[]> downloadArquivo(@PathVariable("id") UUID id) {
+        Byte[] arquivo = examService.gerarCartaoResposta(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "arquivo.pdf");
+
+        return new ResponseEntity<>(arquivo, headers, HttpStatus.OK);
     }
 
     @PostMapping
