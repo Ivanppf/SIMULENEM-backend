@@ -25,4 +25,6 @@ public interface ExamService {
 
     void deleteById(UUID id);
 
+    public byte[] generatePdf(UUID id);
+
 }

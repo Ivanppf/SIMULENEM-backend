@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ifpbpj2.SIMULENEM_backend.infra.pdfGenerator.PdfGenerator;
 import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.ExamRepository;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.projections.ExamProjection;
@@ -59,6 +60,11 @@ public class ExamServiceImpl implements ExamService {
     public void deleteById(UUID id) {
         findById(id);
         examRepository.deleteById(id);
+    }
+
+    public byte[] generatePdf(UUID id) {
+        var exam = findById(id);
+        return PdfGenerator.generateExamPdf(exam);
     }
 
 }
