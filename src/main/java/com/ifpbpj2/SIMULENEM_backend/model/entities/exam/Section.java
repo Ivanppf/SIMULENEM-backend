@@ -11,13 +11,12 @@ import jakarta.persistence.*;
 @Table(name = "TB_SECTION")
 public class Section implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private Integer position;
-
 
     private String title;
 
@@ -40,21 +39,26 @@ public class Section implements Serializable {
         this.title = title;
     }
 
-    public void addQuestionExams(QuestionExam questionExam){
-        questionExam.setSection(this);
-        this.questionExams.add(questionExam);
+    public void addQuestions(Set<QuestionExam> newQuestionsExam) {
+        newQuestionsExam.forEach(q -> q.setSection(this));
+        questionExams.addAll(newQuestionsExam);
     }
 
-    public double getScoreSection(){
+    public double getScoreSection() {
+        if (questionExams == null) {
+            return Double.valueOf(0);
+        }
         return questionExams.stream().mapToDouble((QuestionExam::getScoreQuestion)).sum();
     }
 
     public UUID getId() {
         return id;
     }
+
     public void setId(UUID id) {
         this.id = id;
     }
+
     public Integer getPosition() {
         return position;
     }
@@ -62,18 +66,23 @@ public class Section implements Serializable {
     public void setPosition(Integer position) {
         this.position = position;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public Set<QuestionExam> getQuestionExams() {
         return questionExams;
     }
+
     public void setQuestionExams(Set<QuestionExam> questions) {
         this.questionExams = questions;
     }
+
     public Exam getExam() {
         return exam;
     }
@@ -98,31 +107,28 @@ public class Section implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((position == null) ? 0 : position.hashCode());
         return result;
-    }    
+    }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)    
+        if (obj == null)
             return false;
-        if (getClass() != obj.getClass())    
+        if (getClass() != obj.getClass())
             return false;
-        Section other = (Section) obj;    
+        Section other = (Section) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
-        } else if (!id.equals(other.id))        
+        } else if (!id.equals(other.id))
             return false;
         if (position == null) {
             if (other.position != null)
                 return false;
-        } else if (!position.equals(other.position))        
+        } else if (!position.equals(other.position))
             return false;
-        return true;    
-    }    
+        return true;
+    }
 
-
-
-    
 }

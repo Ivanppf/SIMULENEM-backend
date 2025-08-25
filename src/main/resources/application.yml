@@ -11,6 +11,10 @@ spring:
   h2:
     console:
       enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 server:
   servlet:
     context-path: /api/v1/
@@ -21,3 +25,16 @@ springdoc:
   swagger-ui:
     path: /docs.html
     operations-sorter: group
+
+cloud:
+  aws:
+    s3:
+      endpointUrl: http://localhost:4566
+      bucketName: my-image-bucket
+    credentials:
+      accessKey: test
+      secretKey: test
+    region:
+      static: us-east-1
+    stack:
+      auto: false

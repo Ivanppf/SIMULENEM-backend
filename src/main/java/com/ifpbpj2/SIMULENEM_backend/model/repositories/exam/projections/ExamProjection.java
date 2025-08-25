@@ -13,6 +13,4 @@ public interface ExamProjection {
 
         boolean isResultPublished();
 
-        Double getTotalScore();
-
 }

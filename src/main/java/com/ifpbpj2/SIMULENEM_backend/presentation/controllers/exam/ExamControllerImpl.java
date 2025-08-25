@@ -69,4 +69,12 @@ public class ExamControllerImpl {
         return new ResponseEntity<>((HttpStatus.NO_CONTENT));
     }
 
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> generatePdf(@PathVariable UUID id) {
+        var pdf = examService.generatePdf(id);
+        var headerValue = String.format("inline; filename=%s.pdf", id);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                .contentType(MediaType.APPLICATION_PDF).body(pdf);
+    }
+
 }
