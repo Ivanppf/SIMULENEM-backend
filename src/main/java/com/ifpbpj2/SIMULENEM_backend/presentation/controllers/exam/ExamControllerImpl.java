@@ -14,8 +14,10 @@ import com.ifpbpj2.SIMULENEM_backend.model.entities.exam.Exam;
 import com.ifpbpj2.SIMULENEM_backend.model.repositories.exam.projections.ExamProjection;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.PageableMapper;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.answerSheetClient.GabaritoResponseDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.request.ExamRequestDTO;
 import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDTO;
+import com.ifpbpj2.SIMULENEM_backend.presentation.DTO.response.ExamResponseDosCabaDTO;
 
 @RestController
 @RequestMapping("/exams")
@@ -75,6 +77,18 @@ public class ExamControllerImpl {
         var headerValue = String.format("inline; filename=%s.pdf", id);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
                 .contentType(MediaType.APPLICATION_PDF).body(pdf);
+    }
+
+    @GetMapping("/{id}/model-card")
+    public ResponseEntity<ExamResponseDosCabaDTO> getModelCard(@PathVariable UUID id) {
+        var modelCard = examService.getModelCard(id);
+        return ResponseEntity.ok(modelCard);
+    }
+
+    @GetMapping("/{id}/gabarito")
+    public ResponseEntity<GabaritoResponseDTO> gerarGabarito(@PathVariable UUID id) {
+        var gabarito = examService.gerarGabarito(id);
+        return ResponseEntity.ok(gabarito);
     }
 
 }

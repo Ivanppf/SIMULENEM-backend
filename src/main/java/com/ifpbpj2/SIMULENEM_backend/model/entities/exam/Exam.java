@@ -1,7 +1,6 @@
 package com.ifpbpj2.SIMULENEM_backend.model.entities.exam;
 
 import java.io.Serializable;
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;

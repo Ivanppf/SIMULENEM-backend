@@ -1,15 +1,14 @@
 package com.ifpbpj2.SIMULENEM_backend.infra.aws;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 
 @Service
 public class S3Service {
@@ -30,6 +29,6 @@ public class S3Service {
         metadata.setContentType(file.getContentType());
         amazonS3.putObject(bucketName, key, file.getInputStream(), metadata);
         return amazonS3.getUrl(bucketName, key).toString();
-    } 
-    
+    }
+
 }

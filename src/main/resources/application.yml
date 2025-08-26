@@ -1,16 +1,16 @@
 spring:
   application:
     name: SIMULENEM-backend
-  docker:
-    compose:
-      enabled: false
+
   datasource:
-    url: jdbc:h2:mem:simulenem
-    username: sa
-    password: password
-  h2:
-    console:
-      enabled: true
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
   servlet:
     multipart:
       max-file-size: 10MB
@@ -18,6 +18,7 @@ spring:
 server:
   servlet:
     context-path: /api/v1/
+  port: 8080
 
 springdoc:
   api-docs:
